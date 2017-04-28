@@ -127,3 +127,14 @@ buildNumber.properties
 modules.xml
 .idea/misc.xml
 *.ipr
+
+#Autres
+colors.scheme.xml
+databaseSettings.xml
+debugger.xml
+diff.xml
+gradle.run.settings.xml
+IntelliLang.xml
+mavenVersion.xml
+other.xml
+web-browsers.xml
