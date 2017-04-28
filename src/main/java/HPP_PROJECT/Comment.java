@@ -13,4 +13,11 @@ public class Comment {
 		private int post_commented; // is the id of the post being commented (-1 if the tuple is a reply to a comment)
 
 
+	public Comment(int time)
+{
+		ts = time;
+	
+ }
 }
+
+/**TODO Définir les methodes pour la classe comment**/

@@ -6,6 +6,7 @@ public class Post {
 	 private int user_id;
 	 private String user;
 	 
+	 /**TODO Définir les methodes pour la classe post**/
 	 
 	 public Post(int time)
 	 {
