@@ -77,4 +77,5 @@ public class Comment {
 
 /**
  * TODO Définir les methodes pour la classe comment
+ * TODO Penser à utiliser JodaTime pour la méthode de lecture de la date
  **/

@@ -39,12 +39,14 @@ public class Post {
         this.user = user;
     }
 
-    /**
-     * TODO Définir les methodes pour la classe post
-     **/
 
     public Post(int time) {
         ts = time;
     }
+    
+    /**
+     * TODO Définir les methodes pour la classe post
+     **/
+
 
 }
