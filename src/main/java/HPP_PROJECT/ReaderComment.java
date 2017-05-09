@@ -1,25 +1,25 @@
-package HPP_PR/OJECT;
+package HPP_PROJECT;
 
 import java.io.BufferedReader;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
-import java.io.IOException;
+import java.util.ArrayList;
 
 public class ReaderComment {
-	
-    public void ReadComment(String fichier) throws FileNotFoundException, IOException{
-    	BufferedReader br;
-    	
-    	try {
-    		 br = new BufferedReader(new FileReader(fichier)); 
-    	}catch(Exception e){
-    		e.printStackTrace();
-    	}
-    	    String line;
-    	  /*  while ((line = br.readLine()) != null) {
-    	       // process the line.
-    	    }*
-    	}
-    }
 
+    private ArrayList<Comment> commentList = new ArrayList();
+
+    public void ReadComment(String fichier) {
+        BufferedReader br;
+
+        try {
+            br = new BufferedReader(new FileReader(fichier));
+            StringBuffer line;
+            while (br.readLine() != null) {
+
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 }

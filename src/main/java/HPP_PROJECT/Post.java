@@ -80,7 +80,7 @@ public class Post {
 		return true;
 	}
 
-	public Post(DateTime time, int post_id, int user_id, String user, int score) {
+	public Post(DateTime time, int post_id, int user_id, String user) {
         ts = time;
         this.post_id = post_id;
         this.user_id = user_id;
