@@ -17,6 +17,7 @@ public class ReaderPost {
     	
     	try {
     		 br = new BufferedReader(new FileReader(fichier)); 
+    		 line = br.readLine();
     	}catch(Exception e){
     		e.printStackTrace();
     	}
@@ -28,10 +29,10 @@ public class ReaderPost {
     {
     	
     	String[] list = line.split("\\|");
-    	DateTimeFormatter formatter = DateTimeFormat.forPattern("yyyy-MM-ddTHH:mm:ss");
+    	DateTimeFormatter formatter = DateTimeFormat.forPattern("yyyy-MM-dd'T'HH:mm:ss.SSSZ");
     	DateTime dt = formatter.parseDateTime(list[0]);
     	
-    	return new Post(dt, Integer.parseInt(list[1]), Integer.parseInt(list[2]), list[4], 0)
+    	return new Post(dt, Integer.parseInt(list[1]), Integer.parseInt(list[2]), list[4]);
     }
     
     
