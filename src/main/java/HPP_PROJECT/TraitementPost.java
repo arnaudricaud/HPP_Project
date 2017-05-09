@@ -6,8 +6,8 @@ import org.joda.time.DateTime;
 
 public class TraitementPost {
 	
-	public void traitement(DateTime tk, ArrayList<Post> tabPost){
-		ReaderPost rdPost = new ReaderPost("import/post.dat");
+	public void traitement(DateTime tk, ArrayList<Post> tabPost, ReaderPost rdPost){
+		//ReaderPost rdPost = new ReaderPost("import/post.dat");
 		
 		Post pst = rdPost.readPost();
 		
