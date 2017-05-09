@@ -9,9 +9,9 @@ import java.io.FileReader;
 
 public class ReaderComment {
 
-    public void ReadComment(String fichier) {
+    public String ReadComment(String fichier) {
         BufferedReader br;
-        String line;
+        String line = "vide";
 
         try {
             br = new BufferedReader(new FileReader(fichier));
@@ -19,6 +19,8 @@ public class ReaderComment {
         } catch (Exception e) {
             e.printStackTrace();
         }
+
+        return line;
     }
 
     public static Comment commentCreate(String line){
