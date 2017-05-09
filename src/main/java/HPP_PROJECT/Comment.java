@@ -8,7 +8,6 @@ public class Comment {
     private DateTime ts; //is the comment's timestamp
     private int comment_id; // is the unique id of the comment
     private int user_id;// 	is the unique id of the user
-    private String comment; // is a string containing the actual comment
     private String user; // 	is a string containing the actual user name
     private int comment_replied; // is the id of the comment being replied to (-1 if the tuple is a reply to a post)
     private int post_commented; // is the id of the post being commented (-1 if the tuple is a reply to a comment)
@@ -46,14 +45,6 @@ public class Comment {
         this.user_id = user_id;
     }
 
-    public String getComment() {
-        return comment;
-    }
-
-    public void setComment(String comment) {
-        this.comment = comment;
-    }
-
     public String getUser() {
         return user;
     }
@@ -78,11 +69,10 @@ public class Comment {
         this.post_commented = post_commented;
     }
 
-    public Comment(DateTime time, int comment_id, int user_id, String comment, String user, int comment_replied, int post_commented) {
+    public Comment(DateTime time, int comment_id, int user_id, String user, int comment_replied, int post_commented) {
         ts = time;
         this.comment_id = comment_id;
         this.user_id = user_id;
-        this.comment = comment;
         this.comment_replied = comment_replied;
         this.post_commented = post_commented;
         this.user = user;

@@ -29,8 +29,8 @@ public class ReaderComment {
             e.printStackTrace();
         }
 
-        if (line.equals("vide")){
-            return new Comment(new DateTime(), -1, -1, "", "", -1, -1);
+        if (line == null){
+            return new Comment(new DateTime(), -1, -1, "", -1, -1);
         }
         else{
             return commentCreate(line);
@@ -42,9 +42,16 @@ public class ReaderComment {
         DateTimeFormatter formatter = DateTimeFormat.forPattern("yyyy-MM-dd'T'HH:mm:ss.SSSZ");
         DateTime dt = formatter.parseDateTime(list[0]);
 
+        if(list[5].equals("")){
+            list[5] = "-1";
+        }
+        else{
+            list[6] = "-1";
+        }
+
         return new Comment(dt,
                 Integer.parseInt(list[1]), Integer.parseInt(list[2]),
-                list[3], list[4],
+                list[4],
                 Integer.parseInt(list[5]), Integer.parseInt(list[6]));
     }
 }
