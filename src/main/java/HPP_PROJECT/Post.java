@@ -8,16 +8,16 @@ public class Post {
     private int post_id;
     private int user_id;
     private String user;
+    private int scorePost;
+    private int scoreTotal;
 
-    private int score;
 
-
-    public int getScore() {
-        return score;
+    public int getScorePost() {
+        return scorePost;
     }
 
-    public void setScore(int score) {
-        this.score = score;
+    public void setScorePost(int score) {
+        this.scorePost = score;
     }
 
     public DateTime getTs() {
@@ -63,7 +63,9 @@ public class Post {
 		Post other = (Post) obj;
 		if (post_id != other.post_id)
 			return false;
-		if (score != other.score)
+		if (scorePost != other.scorePost)
+			return false;
+		if (scoreTotal != other.scoreTotal)
 			return false;
 		if (ts == null) {
 			if (other.ts != null)
@@ -85,7 +87,8 @@ public class Post {
         this.post_id = post_id;
         this.user_id = user_id;
         this.user = user;
-        this.score = 10;
+        this.scorePost = 10;
+        this.scoreTotal = 10;
 
     }
 
