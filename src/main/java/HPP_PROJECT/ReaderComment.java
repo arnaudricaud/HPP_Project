@@ -9,12 +9,10 @@ import java.io.FileReader;
 
 public class ReaderComment {
 
-    public String ReadComment(String fichier) {
-        BufferedReader br;
+    public String ReadComment(BufferedReader br) {
         String line = "vide";
 
         try {
-            br = new BufferedReader(new FileReader(fichier));
             line = br.readLine();
         } catch (Exception e) {
             e.printStackTrace();
