@@ -5,14 +5,27 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 
+import org.joda.time.DateTime;
+
 public class ReaderPost {
 
-    public void ReadPost(String fichier) throws FileNotFoundException, IOException{
+    public static Post ReadPost(String fichier){
+    	String line = "";
     	try (BufferedReader br = new BufferedReader(new FileReader(fichier))) {
-    	    String line;
-    	    while ((line = br.readLine()) != null) {
-    	       // process the line.
-    	    }
+     	    	line = br.readLine();
+    	}catch(Exception e){
+    		e.printStackTrace();
     	}
+    	
+    	//return line;
     }
+    
+    public Post split(String line)
+    {
+    	String[] list = line.split("\\|");
+    	
+    	return new Post()
+    }
+    
+    
 }
