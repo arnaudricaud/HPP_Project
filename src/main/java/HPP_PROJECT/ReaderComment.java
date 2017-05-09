@@ -3,22 +3,38 @@ package HPP_PROJECT;
 import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
+import org.omg.CORBA.COMM_FAILURE;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
 
 public class ReaderComment {
 
-    public String ReadComment(BufferedReader br) {
+    private static BufferedReader BR;
+
+    public ReaderComment(String fichier){
+        try{
+            BR = new BufferedReader(new FileReader(fichier));
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
+    public static Comment ReadComment() {
         String line = "vide";
 
         try {
-            line = br.readLine();
+            line = BR.readLine();
         } catch (Exception e) {
             e.printStackTrace();
         }
 
-        return line;
+        if (line.equals("vide")){
+            return new Comment(new DateTime(), -1, -1, "", "", -1, -1);
+        }
+        else{
+            return commentCreate(line);
+        }
     }
 
     public static Comment commentCreate(String line){
