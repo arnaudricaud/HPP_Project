@@ -23,10 +23,10 @@ public class PostTest {
 	}
 	
 	@Test
-	public void Read2PostTest() {
-		Post expected = new Post(new DateTime("2010-02-02T19:53:43.226+0000") ,4661, 3981, "Michael Wang");
-		Post actual = ReaderPost.ReadPost("ressources/test/ReadPost/postsTest1.dat");
-		actual = ReaderPost.ReadPost("ressources/test/ReadPost/postsTest1.dat");
+	public void Read2ndPostTest() {
+		Post expected = new Post(new DateTime("2010-02-02T19:53:43.226+0000") ,299101, 4661, "Michael Wang");
+		Post actual = ReaderPost.ReadPost();
+		actual = ReaderPost.ReadPost();
 		assertEquals(true, expected.equals(actual));
 	}
 

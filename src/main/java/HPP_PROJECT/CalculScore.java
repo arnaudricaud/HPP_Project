@@ -27,8 +27,7 @@ public class CalculScore {
 	
 	public void traitement() {
 		// TODO Completer avec l'algo de base 
-		
-		Post pt=
+	
 		
 	}
 
