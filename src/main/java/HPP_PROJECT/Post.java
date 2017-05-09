@@ -51,9 +51,36 @@ public class Post {
     public void setUser(String user) {
         this.user = user;
     }
+    
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Post other = (Post) obj;
+		if (post_id != other.post_id)
+			return false;
+		if (score != other.score)
+			return false;
+		if (ts == null) {
+			if (other.ts != null)
+				return false;
+		} else if (!ts.equals(other.ts))
+			return false;
+		if (user == null) {
+			if (other.user != null)
+				return false;
+		} else if (!user.equals(other.user))
+			return false;
+		if (user_id != other.user_id)
+			return false;
+		return true;
+	}
 
-
-    public Post(DateTime time, int post_id, int user_id, String user, int score) {
+	public Post(DateTime time, int post_id, int user_id, String user, int score) {
         ts = time;
         this.post_id = post_id;
         this.user_id = user_id;
