@@ -1,9 +1,6 @@
 package HPP_PROJECT;
-import org.joda.time.DateTime;
-import org.joda.time.format.DateTimeFormat;
 
-import java.util.Calendar;
-import java.util.Date;
+import org.joda.time.DateTime;
 
 public class Post {
 
@@ -11,22 +8,19 @@ public class Post {
     private int post_id;
     private int user_id;
     private String user;
-    
+
     private int score;
-    
-    
-   
 
 
     public int getScore() {
-		return score;
-	}
+        return score;
+    }
 
-	public void setScore(int score) {
-		this.score = score;
-	}
+    public void setScore(int score) {
+        this.score = score;
+    }
 
-	public DateTime getTs() {
+    public DateTime getTs() {
         return ts;
     }
 
@@ -59,15 +53,15 @@ public class Post {
     }
 
 
-    public Post(DateTime time,int post_id,int user_id,String user,int score) {
+    public Post(DateTime time, int post_id, int user_id, String user, int score) {
         ts = time;
-        this.post_id=post_id;
-        this.user_id=user_id;
-        this.user=user;
-        this.score=10;
-        
+        this.post_id = post_id;
+        this.user_id = user_id;
+        this.user = user;
+        this.score = 10;
+
     }
-    
+
     /**
      * TODO Définir les methodes pour la classe post
      **/
