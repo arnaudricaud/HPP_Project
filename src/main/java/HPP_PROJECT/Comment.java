@@ -88,7 +88,7 @@ public class Comment {
         this.scoreTotal = scoreTotal;
     }
 
-    public Comment(DateTime time, int comment_id, int user_id, String comment, int score, String user, int comment_replied, int post_commented) {
+    public Comment(DateTime time, int comment_id, int user_id, String comment, String user, int comment_replied, int post_commented) {
         ts = time;
         this.comment_id = comment_id;
         this.user_id = user_id;
