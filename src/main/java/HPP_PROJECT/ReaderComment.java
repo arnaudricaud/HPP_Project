@@ -1,4 +1,4 @@
-package HPP_PROJECT;
+package HPP_PR/OJECT;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
@@ -8,11 +8,17 @@ import java.io.IOException;
 public class ReaderComment {
 	
     public void ReadComment(String fichier) throws FileNotFoundException, IOException{
-    	try (BufferedReader br = new BufferedReader(new FileReader(fichier))) {
+    	BufferedReader br;
+    	
+    	try {
+    		 br = new BufferedReader(new FileReader(fichier)); 
+    	}catch(Exception e){
+    		e.printStackTrace();
+    	}
     	    String line;
-    	    while ((line = br.readLine()) != null) {
+    	  /*  while ((line = br.readLine()) != null) {
     	       // process the line.
-    	    }
+    	    }*
     	}
     }
 

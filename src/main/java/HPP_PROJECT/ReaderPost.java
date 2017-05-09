@@ -11,17 +11,21 @@ public class ReaderPost {
 
     public static Post ReadPost(String fichier){
     	String line = "";
-    	try (BufferedReader br = new BufferedReader(new FileReader(fichier))) {
-     	    	line = br.readLine();
+    	BufferedReader br;
+    	
+    	try {
+    		 br = new BufferedReader(new FileReader(fichier)); 
     	}catch(Exception e){
     		e.printStackTrace();
     	}
     	
-    	//return line;
+    	return split(line);
+
     }
     
-    public Post split(String line)
+    public static Post split(String line)
     {
+    	
     	String[] list = line.split("\\|");
     	
     	return new Post()
