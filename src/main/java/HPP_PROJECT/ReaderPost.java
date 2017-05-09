@@ -21,7 +21,7 @@ public class ReaderPost {
     	}
 	}
 
-    public static Post ReadPost(){
+    public static Post readPost(){
     	String line = "";
     	
     	try {  		  
