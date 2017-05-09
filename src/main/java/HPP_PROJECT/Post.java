@@ -7,16 +7,30 @@ import java.util.Date;
 
 public class Post {
 
-    private int ts;
+    private DateTime ts;
     private int post_id;
     private int user_id;
     private String user;
+    
+    private int score;
+    
+    
+   
 
-    public int getTs() {
+
+    public int getScore() {
+		return score;
+	}
+
+	public void setScore(int score) {
+		this.score = score;
+	}
+
+	public DateTime getTs() {
         return ts;
     }
 
-    public void setTs(int ts) {
+    public void setTs(DateTime ts) {
         this.ts = ts;
     }
 
@@ -45,8 +59,13 @@ public class Post {
     }
 
 
-    public Post(int time) {
+    public Post(DateTime time,int post_id,int user_id,String user,int score) {
         ts = time;
+        this.post_id=post_id;
+        this.user_id=user_id;
+        this.user=user;
+        this.score=10;
+        
     }
     
     /**

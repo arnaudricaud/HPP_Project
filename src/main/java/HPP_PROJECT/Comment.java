@@ -7,20 +7,30 @@ import java.util.Date;
 public class Comment {
 
 
-    private int ts; //is the comment's timestamp
+    private DateTime ts; //is the comment's timestamp
     private int comment_id; // is the unique id of the comment
     private int user_id;// 	is the unique id of the user
     private String comment; // is a string containing the actual comment
     private String user; // 	is a string containing the actual user name
     private int comment_replied; // is the id of the comment being replied to (-1 if the tuple is a reply to a post)
     private int post_commented; // is the id of the post being commented (-1 if the tuple is a reply to a comment)
+    private int score;
+    
+    
+    
+    public int getScore() {
+  		return score;
+  	}
 
+  	public void setScore(int score) {
+  		this.score = score;
+  	}
 
-    public int getTs() {
+    public DateTime getTs() {
         return ts;
     }
 
-    public void setTs(int ts) {
+    public void setTs(DateTime ts) {
         this.ts = ts;
     }
 
@@ -72,8 +82,16 @@ public class Comment {
         this.post_commented = post_commented;
     }
 
-    public Comment(int time) {
+    public Comment(DateTime time,int comment_id,int user_id,String comment,int score,String user,int comment_replied,int post_commented) {
         ts = time;
+        this.comment_id = comment_id;
+        this.user_id = user_id;
+        this.comment = comment;
+        this.comment_replied = comment_replied;
+        this.post_commented = post_commented;
+        this.user=user;
+        this.score=10;
+        
     }
 
 
