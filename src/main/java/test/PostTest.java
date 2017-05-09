@@ -16,14 +16,14 @@ public class PostTest {
 	}
 	
 	@Test
-	public void ReadPostTest() {
+	public void readPostTest() {
 		Post expected = new Post(new DateTime("2010-02-01T05:12:32.921+0000") ,1039993, 3981, "Lei Liu");
 		Post actual = ReaderPost.ReadPost();
 		assertEquals(true, expected.equals(actual));
 	}
 	
 	@Test
-	public void Read2ndPostTest() {
+	public void read2ndPostTest() {
 		Post expected = new Post(new DateTime("2010-02-02T19:53:43.226+0000") ,299101, 4661, "Michael Wang");
 		Post actual = ReaderPost.ReadPost();
 		actual = ReaderPost.ReadPost();

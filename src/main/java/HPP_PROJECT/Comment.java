@@ -69,7 +69,39 @@ public class Comment {
         this.post_commented = post_commented;
     }
 
-    public Comment(DateTime time, int comment_id, int user_id, String user, int comment_replied, int post_commented) {
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Comment other = (Comment) obj;
+		if (comment_id != other.comment_id)
+			return false;
+		if (comment_replied != other.comment_replied)
+			return false;
+		if (post_commented != other.post_commented)
+			return false;
+		if (scorePost != other.scorePost)
+			return false;
+		if (ts == null) {
+			if (other.ts != null)
+				return false;
+		} else if (!ts.equals(other.ts))
+			return false;
+		if (user == null) {
+			if (other.user != null)
+				return false;
+		} else if (!user.equals(other.user))
+			return false;
+		if (user_id != other.user_id)
+			return false;
+		return true;
+	}
+
+	public Comment(DateTime time, int comment_id, int user_id, String user, int comment_replied, int post_commented) {
         ts = time;
         this.comment_id = comment_id;
         this.user_id = user_id;

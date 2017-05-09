@@ -6,27 +6,27 @@ import org.joda.time.DateTime;
 import org.junit.Before;
 import org.junit.Test;
 
-import HPP_PROJECT.Post;
-import HPP_PROJECT.ReaderPost;
+import HPP_PROJECT.Comment;
+import HPP_PROJECT.ReaderComment;
 
 public class CommentTest {
 
 	@Before
 	public void initReader(){
-	    ReaderPost reader = new ReaderComment("ressources/test/BasicTest/commentsTest1.dat");
+		ReaderComment reader = new ReaderComment("ressources/test/BasicTest/commentsTest1.dat");
 	}
 	
 	@Test
-	public void ReadCommentTest() {
-		Comment expected = new Comment(new DateTime("2010-02-01T05:12:32.921+0000") ,1039993, 3981, "Lei Liu");
-		Comment actual = ReaderComment.ReadPost();
+	public void readCommentTest() {
+		Comment expected = new Comment(new DateTime("2010-02-09T04:05:20.777+0000") ,529590, 2886, "Baoping Wu", -1, 529360);
+		Comment actual = ReaderComment.ReadComment();
 		assertEquals(true, expected.equals(actual));
 	}
 	
 	@Test
-	public void Read2ndCommentTest() {
-		Comment expected = new Comment(new DateTime("2010-02-02T19:53:43.226+0000") ,299101, 4661, "Michael Wang");
-		String actualStr = ReaderComment.ReadComment();
+	public void read2ndCommentTest() {
+		Comment expected = new Comment(new DateTime("2010-02-09T04:20:53.281+0000") ,529589, 2886, "Baoping Wu", -1, 529360);
+		Comment actual = ReaderComment.ReadComment();
 		actual = ReaderComment.ReadComment();
 		assertEquals(true, expected.equals(actual));
 	}
