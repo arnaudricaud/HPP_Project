@@ -13,14 +13,12 @@ public class Comment {
     private int comment_replied; // is the id of the comment being replied to (-1 if the tuple is a reply to a post)
     private int post_commented; // is the id of the post being commented (-1 if the tuple is a reply to a comment)
     private int scorePost;
-    private int scoreTotal;
 
-
-    public int getScorePost() {
+    public int getScore() {
         return scorePost;
     }
 
-    public void setScorePost(int score) {
+    public void setScore(int score) {
         this.scorePost = score;
     }
 
@@ -80,14 +78,6 @@ public class Comment {
         this.post_commented = post_commented;
     }
 
-    public int getScoreTotal() {
-        return scoreTotal;
-    }
-
-    public void setScoreTotal(int scoreTotal) {
-        this.scoreTotal = scoreTotal;
-    }
-
     public Comment(DateTime time, int comment_id, int user_id, String comment, String user, int comment_replied, int post_commented) {
         ts = time;
         this.comment_id = comment_id;
@@ -97,7 +87,6 @@ public class Comment {
         this.post_commented = post_commented;
         this.user = user;
         this.scorePost = 10;
-        this.scoreTotal = 10;
     }
 
 
