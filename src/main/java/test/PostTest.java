@@ -12,7 +12,7 @@ public class PostTest {
 
 	@Before
 	public void initReader(){
-	    ReaderPost reader = new ReaderPost("ressources/test/ReadPost/postsTest1.dat");
+	    ReaderPost reader = new ReaderPost("ressources/test/BasicTest/postsTest1.dat");
 	}
 	
 	@Test
