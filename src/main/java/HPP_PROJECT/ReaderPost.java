@@ -10,13 +10,21 @@ import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 
 public class ReaderPost {
+	
+	private static BufferedReader br;
+	
+	public ReaderPost(String fichier) {
+		try{
+			br = new BufferedReader(new FileReader(fichier));
+		}catch(Exception e){
+    		e.printStackTrace();
+    	}
+	}
 
-    public static Post ReadPost(String fichier){
+    public static Post ReadPost(){
     	String line = "";
-    	BufferedReader br;
     	
-    	try {
-    		 br = new BufferedReader(new FileReader(fichier)); 
+    	try {  		  
     		 line = br.readLine();
     	}catch(Exception e){
     		e.printStackTrace();
