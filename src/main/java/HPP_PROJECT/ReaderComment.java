@@ -8,19 +8,30 @@ import org.omg.CORBA.COMM_FAILURE;
 import java.io.BufferedReader;
 import java.io.FileReader;
 
-public class ReaderComment {
+public final class ReaderComment {
 
-    private static BufferedReader BR;
+    private BufferedReader BR;
+    private static volatile ReaderComment instance = null;
+    private String adresseFichier = "../data/comments.dat";
 
-    public ReaderComment(String fichier){
+    private ReaderComment(){
         try{
-            BR = new BufferedReader(new FileReader(fichier));
+            BR = new BufferedReader(new FileReader(adresseFichier));
         }catch (Exception e){
             e.printStackTrace();
         }
     }
 
-    public static Comment ReadComment() {
+    public final static ReaderComment getInstance(){
+        if(ReaderComment.instance == null){
+            synchronized (ReaderComment.class){
+                ReaderComment.instance = new ReaderComment();
+            }
+        }
+        return instance;
+    }
+
+    private Comment readNextComment() {
         String line = "vide";
 
         try {
@@ -33,11 +44,11 @@ public class ReaderComment {
             return new Comment(new DateTime(), -1, -1, "", -1, -1);
         }
         else{
-            return commentCreate(line);
+            return createComment(line);
         }
     }
 
-    public static Comment commentCreate(String line){
+    private Comment createComment(String line){
         String[] list = line.split("\\|");
         DateTimeFormatter formatter = DateTimeFormat.forPattern("yyyy-MM-dd'T'HH:mm:ss.SSSZ");
         DateTime dt = formatter.parseDateTime(list[0]);
