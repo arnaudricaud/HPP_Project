@@ -78,7 +78,7 @@ public class Comment {
         this.age = age;
     }
 
-    @Override
+	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
 			return true;
@@ -87,6 +87,8 @@ public class Comment {
 		if (getClass() != obj.getClass())
 			return false;
 		Comment other = (Comment) obj;
+		if (age != other.age)
+			return false;
 		if (comment_id != other.comment_id)
 			return false;
 		if (comment_replied != other.comment_replied)
