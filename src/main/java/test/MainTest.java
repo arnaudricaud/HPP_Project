@@ -2,6 +2,8 @@ package test;
 
 import static org.junit.Assert.*;
 
+import java.util.ArrayList;
+
 import org.joda.time.DateTime;
 import org.junit.Test;
 
@@ -68,6 +70,30 @@ public class MainTest {
 		DateTime tk = new DateTime("2010-02-25T10:05:20.777+0000");
 		Main.updatePost(p, tk);
 		assertEquals(0, p.getScorePost());
+	}
+	
+	@Test
+	public void sortByScoreTotalTest() {
+
+		ArrayList<Post> expected = new ArrayList<Post>();
+		ArrayList<Post> actual = new ArrayList<Post>();
+		expected.add(new Post(new DateTime("2010-02-01T05:12:32.921+0000") ,1039993, 3981, "Lei Liu"));
+		expected.add(new Post(new DateTime("2010-02-02T19:53:43.226+0000") ,299101, 4661, "Michael Wang"));
+		expected.get(0).setScoreTotal(20);
+		expected.get(1).setScoreTotal(10);		
+		actual.add(expected.get(1));
+		actual.add(expected.get(0));
+		Main.sortPost(actual);
+
+		
+		Boolean test;
+		if ((actual.get(0).equals(expected.get(0))) && (actual.get(1).equals(expected.get(1)))){
+			test = true;
+		} else{
+			test = false;
+		}
+
+		assertEquals(true, test);
 	}
 	
 }

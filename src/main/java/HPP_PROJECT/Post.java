@@ -101,7 +101,9 @@ public class Post {
 			return false;
 		return true;
 	}
+	
 
+	
 	public Post(DateTime time, int post_id, int user_id, String user) {
         ts = time;
         this.post_id = post_id;
