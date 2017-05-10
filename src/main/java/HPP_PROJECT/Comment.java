@@ -11,15 +11,8 @@ public class Comment {
     private String user; // 	is a string containing the actual user name
     private int comment_replied; // is the id of the comment being replied to (-1 if the tuple is a reply to a post)
     private int post_commented; // is the id of the post being commented (-1 if the tuple is a reply to a comment)
-    private int scorePost;
-
-    public int getScore() {
-        return scorePost;
-    }
-
-    public void setScore(int score) {
-        this.scorePost = score;
-    }
+    private int score;
+    private int age;
 
     public DateTime getTs() {
         return ts;
@@ -69,7 +62,23 @@ public class Comment {
         this.post_commented = post_commented;
     }
 
-	@Override
+    public int getScore() {
+        return score;
+    }
+
+    public void setScore(int score) {
+        this.score = score;
+    }
+
+    public int getAge() {
+        return age;
+    }
+
+    public void setAge(int age) {
+        this.age = age;
+    }
+
+    @Override
 	public boolean equals(Object obj) {
 		if (this == obj)
 			return true;
@@ -84,7 +93,7 @@ public class Comment {
 			return false;
 		if (post_commented != other.post_commented)
 			return false;
-		if (scorePost != other.scorePost)
+		if (score != other.score)
 			return false;
 		if (ts == null) {
 			if (other.ts != null)
@@ -108,7 +117,8 @@ public class Comment {
         this.comment_replied = comment_replied;
         this.post_commented = post_commented;
         this.user = user;
-        this.scorePost = 10;
+        this.score = 10;
+        this.age = 0;
     }
 
 

@@ -10,6 +10,7 @@ public class Post {
     private String user;
     private int scorePost;
     private int scoreTotal;
+    private int age;
 
 
     public int getScorePost() {
@@ -51,8 +52,24 @@ public class Post {
     public void setUser(String user) {
         this.user = user;
     }
-    
-	@Override
+
+    public int getScoreTotal() {
+        return scoreTotal;
+    }
+
+    public void setScoreTotal(int scoreTotal) {
+        this.scoreTotal = scoreTotal;
+    }
+
+    public int getAge() {
+        return age;
+    }
+
+    public void setAge(int age) {
+        this.age = age;
+    }
+
+    @Override
 	public boolean equals(Object obj) {
 		if (this == obj)
 			return true;
@@ -89,6 +106,7 @@ public class Post {
         this.user = user;
         this.scorePost = 10;
         this.scoreTotal = 10;
+        this.age = 0;
 
     }
 
