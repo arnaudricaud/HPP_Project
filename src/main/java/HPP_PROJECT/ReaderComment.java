@@ -11,6 +11,7 @@ public final class ReaderComment {
 
     private BufferedReader BR;
     private static volatile ReaderComment instance = null;
+    private Comment currentComment;
 
     private ReaderComment(String adresseFichier){
         try{
@@ -28,6 +29,15 @@ public final class ReaderComment {
         }
         return ReaderComment.instance;
     }
+    
+    public static void reset(String adresseFichier) {
+        instance = new ReaderComment(adresseFichier);
+    }
+    
+    
+    public Comment getCurrentComment(){
+    	return currentComment;
+    }
 
     public Comment readNextComment() {
         String line = "vide";
@@ -42,7 +52,8 @@ public final class ReaderComment {
             return new Comment(new DateTime(), -1, -1, "", -1, -1);
         }
         else{
-            return createComment(line);
+        	currentComment = createComment(line);
+            return currentComment;
         }
     }
 

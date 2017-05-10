@@ -11,6 +11,7 @@ public class ReaderPost {
 	
 	private BufferedReader br;
 	private static volatile ReaderPost instance = null;
+	private Post currentPost;
 	
 	private ReaderPost(String fichier) {
 		try{
@@ -28,7 +29,16 @@ public class ReaderPost {
 		}
 		return ReaderPost.instance;
 	}
+	
+    public static void reset(String adresseFichier) {
+        instance = new ReaderPost(adresseFichier);
+    }
 
+    public Post getCurrentPost(){
+    	return currentPost;
+    }
+    
+    
     public Post readNextPost(){
     	String line = "";
     	
@@ -42,9 +52,13 @@ public class ReaderPost {
 			return new Post(new DateTime(), -1, -1, "");
 		}
 		else{
-			return createPost(line);
+			currentPost = createPost(line);
+			return currentPost;
 		}
     }
+    
+    
+    
     
     public Post createPost(String line)
     {
