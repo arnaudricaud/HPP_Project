@@ -1,10 +1,18 @@
 package HPP_PROJECT;
 
+import java.util.ArrayList;
+
 import org.joda.time.DateTime;
 import org.joda.time.Duration;
 
+
+
 public class Main {
+	static ArrayList <Post> tabPost= new ArrayList<Post>() ;
+	static ArrayList <Comment> tabComment= new ArrayList<Comment>();
 	public static void main(String[] args) {
+
+		
 		
 	}
 
@@ -35,6 +43,17 @@ public class Main {
 		}else{
 			c.setScore(0);
 		}
+	}
+	
+	public static void supression(){
+		for(int i=0;i<tabPost.size();i++){
+			if(tabPost.get(i).getScorePost()==0) {
+				
+				
+			}
+		}
+		
+		
 	}
 
 }
