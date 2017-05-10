@@ -11,9 +11,18 @@ public class Post {
     private int scorePost;
     private int scoreTotal;
     private int age;
+    private int nbCommentateur; 
 
 
-    public int getScorePost() {
+    public int getNbCommentateur() {
+		return nbCommentateur;
+	}
+
+	public void setNbCommentateur(int nbCommentateur) {
+		this.nbCommentateur = nbCommentateur;
+	}
+
+	public int getScorePost() {
         return scorePost;
     }
 
