@@ -48,12 +48,9 @@ public class Main {
 	public static void supression(){
 		for(int i=0;i<tabPost.size();i++){
 			if(tabPost.get(i).getScorePost()==0) {
-				
-				
+				tabPost.remove(i);
 			}
-		}
-		
-		
+		}	
 	}
 
 }
