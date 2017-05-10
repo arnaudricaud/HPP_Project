@@ -69,7 +69,8 @@ public class Post {
         this.age = age;
     }
 
-    @Override
+    
+	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
 			return true;
@@ -78,6 +79,8 @@ public class Post {
 		if (getClass() != obj.getClass())
 			return false;
 		Post other = (Post) obj;
+		if (age != other.age)
+			return false;
 		if (post_id != other.post_id)
 			return false;
 		if (scorePost != other.scorePost)
