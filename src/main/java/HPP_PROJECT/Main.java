@@ -30,6 +30,22 @@ public class Main {
 		writeTop3(expected, new DateTime("2010-02-03T20:53:43.226+0000"));
 	}
 
+	public ArrayList<Post> getTabPost() {
+		return tabPost;
+	}
+
+	public void setTabPost(ArrayList<Post> tabPost) {
+		Main.tabPost = tabPost;
+	}
+
+	public ArrayList<Comment> getTabComment() {
+		return tabComment;
+	}
+
+	public void setTabComment(ArrayList<Comment> tabComment) {
+		Main.tabComment = tabComment;
+	}
+
 	public static DateTime nextTick(Post p, Comment c) {
 		long diff = p.getTs().getMillis() - c.getTs().getMillis();
 		if (diff >= 0) {

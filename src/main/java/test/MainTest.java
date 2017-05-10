@@ -96,4 +96,20 @@ public class MainTest {
 		assertEquals(true, test);
 	}
 	
+	@Test
+	public void nbCommentateursTest() {
+		Main test = new Main();
+		Post p = new Post(new DateTime("2010-02-01T05:12:32.921+0000") ,1039993, 3981, "Lei Liu");
+		
+		ArrayList<Comment> tabCom = new ArrayList<Comment>();
+		tabCom.add(new Comment(new DateTime("2010-02-09T04:05:20.777+0000") ,529590, 2886, "Baoping Wu", -1, 1039993));
+		tabCom.add(new Comment(new DateTime("2010-02-09T04:20:53.281+0000") ,529589, 2886, "Baoping Wu", -1, 1039993));
+		tabCom.add(new Comment(new DateTime("2010-02-09T06:08:38.206+0000") ,529594, 3633, "Jun Wu", -1, 1039993));
+		tabCom.add(new Comment(new DateTime("2010-02-09T06:08:38.206+0000") ,529595, 3635, "Samuel Goussault", -1, 123));
+		tabCom.add(new Comment(new DateTime("2010-02-09T06:08:38.206+0000") ,529596, 3635, "Samuel Goussault", -1, 1039993));
+		test.setTabComment(tabCom);
+		test.countCommenters(p);
+		assertEquals(3, p.getNbCommentateur());
+	}
+	
 }
