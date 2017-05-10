@@ -13,6 +13,7 @@ public class Main {
 	static ArrayList<Comment> tabComment = new ArrayList<Comment>();
 
 	public static void main(String[] args) {
+<<<<<<< HEAD
 		ReaderPost rdPost = ReaderPost.getInstance("ressources/data/posts.dat");
 		ReaderComment rdComment = ReaderComment.getInstance("ressources/data/comment.dat");
 		
@@ -39,6 +40,39 @@ public class Main {
 			
 		}
 		
+=======
+		ArrayList<Post> expected = new ArrayList<Post>();
+		 expected.add(new Post(new DateTime("2010-02-01T05:12:32.921+0000")
+		 ,1039993, 3981, "Lei Liu"));
+		 expected.add(new Post(new DateTime("2010-02-02T19:53:43.226+0000")
+		 ,299101, 4661, "Michael Wang"));
+		expected.add(new Post(new DateTime("2010-02-03T19:53:43.226+0000"), 255120, 4661, "Michael Wang"));
+		expected.get(0).setScoreTotal(10);
+		expected.get(0).setNbCommentateur(1);
+		 expected.get(1).setScoreTotal(20);
+		 expected.get(1).setNbCommentateur(10);
+		 expected.get(2).setScoreTotal(30);
+		 expected.get(2).setNbCommentateur(5);
+		clearHistoriqueFile();
+		writeTop3(expected, new DateTime("2010-02-03T19:53:43.226+0000"));
+		writeTop3(expected, new DateTime("2010-02-03T20:53:43.226+0000"));
+>>>>>>> origin/master
+	}
+
+	public ArrayList<Post> getTabPost() {
+		return tabPost;
+	}
+
+	public void setTabPost(ArrayList<Post> tabPost) {
+		Main.tabPost = tabPost;
+	}
+
+	public ArrayList<Comment> getTabComment() {
+		return tabComment;
+	}
+
+	public void setTabComment(ArrayList<Comment> tabComment) {
+		Main.tabComment = tabComment;
 	}
 
 	public static DateTime nextTick(Post p, Comment c) {
@@ -83,7 +117,6 @@ public class Main {
 		});
 	}
 
-	
 	public static void writeTop3(ArrayList<Post> tabPost, DateTime tk) {
 		sortPost(tabPost);
 		try {
@@ -92,14 +125,14 @@ public class Main {
 			for (int i = 0; i < 2; i++) {
 				if (i < tabPost.size()) {
 					writer.write(tabPost.get(i).getPost_id() + "," + tabPost.get(i).getUser() + ","
-							+ tabPost.get(i).getScoreTotal() + ",\r\n");
+							+ tabPost.get(i).getScoreTotal() + "," + tabPost.get(i).getNbCommentateur() + ",\r\n");
 				} else {
 					writer.write("-,-,-,-,\r\n");
 				}
 			}
 			if (tabPost.size() >= 3) {
 				writer.write(tabPost.get(2).getPost_id() + "," + tabPost.get(2).getUser() + ","
-						+ tabPost.get(2).getScoreTotal() + ">\r\n");
+						+ tabPost.get(2).getScoreTotal() + "," + tabPost.get(2).getNbCommentateur() + ">\r\n");
 			} else {
 				writer.write("-,-,-,->\r\n");
 			}
@@ -143,31 +176,33 @@ public class Main {
 		}
 	}
 
-	public static void calculScore(DateTime tk){
-		for(int i=0; i<tabPost.size(); i++)
-		{
+	public static void calculScore(DateTime tk) {
+		for (int i = 0; i < tabPost.size(); i++) {
 			updatePost(tabPost.get(i), tk);
-			for(int j=0; j<tabComment.size(); j++)
-			{	
-				if(tabComment.get(j).getPost_commented() == tabPost.get(i).getPost_id())
-				{
-					tabPost.get(i).setScoreTotal(tabPost.get(i).getScoreTotal() + tabComment.get(j).getScore());				
-				}						
+			for (int j = 0; j < tabComment.size(); j++) {
+				if (tabComment.get(j).getPost_commented() == tabPost.get(i).getPost_id()) {
+					tabPost.get(i).setScoreTotal(tabPost.get(i).getScoreTotal() + tabComment.get(j).getScore());
+				}
 			}
+<<<<<<< HEAD
+=======
+			if (tabPost.get(i).getScoreTotal() == 0) {
+				tabPost.remove(i);
+			}
+>>>>>>> origin/master
 		}
-		
+
 	}
 
-	public int countCommenters(Post post){
+	public void countCommenters(Post post) {
 		HashSet<Integer> commentersSet = new HashSet<Integer>();
 
 		for (Comment comment : tabComment) {
-			if(comment.getPost_commented() == post.getPost_id()){
+			if (comment.getPost_commented() == post.getPost_id()) {
 				commentersSet.add(comment.getUser_id());
 			}
 		}
-
-		return commentersSet.size();
+		post.setNbCommentateur(commentersSet.size());
 	}
 
 }
