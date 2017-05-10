@@ -2,13 +2,17 @@ package HPP_PROJECT;
 
 import java.util.ArrayList;
 
+import org.joda.time.DateTime;
+
 public class TraitementComment {
 
-    private ArrayList<Comment> listComment = new ArrayList<Comment>();
-    private Comment commentActu;
-    private ReaderComment reader;
+	public static void traitement(DateTime tk, ArrayList<Comment> tabComment, ReaderComment rdComment) {
 
-    public TraitementComment(){
-        reader = ReaderComment.getInstance();
-    }
+		Comment cmt = rdComment.getCurrentComment();
+
+		while (cmt.getTs().equals(tk)) {
+			tabComment.add(cmt);
+			cmt = rdComment.readNextComment();
+		}
+	}
 }
