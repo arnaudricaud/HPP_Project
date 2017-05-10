@@ -1,9 +1,7 @@
 package HPP_PROJECT;
 
 import java.io.BufferedReader;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
-import java.io.IOException;
 
 import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
@@ -11,9 +9,11 @@ import org.joda.time.format.DateTimeFormatter;
 
 public class ReaderPost {
 	
-	private static BufferedReader br;
+	private BufferedReader br;
+	private static volatile ReaderPost instance = null;
+	private Post currentPost;
 	
-	public ReaderPost(String fichier) {
+	private ReaderPost(String fichier) {
 		try{
 			br = new BufferedReader(new FileReader(fichier));
 		}catch(Exception e){
@@ -21,7 +21,25 @@ public class ReaderPost {
     	}
 	}
 
-    public Post readPost(){
+	public final static ReaderPost getInstance(String fichier){
+		if(ReaderPost.instance == null){
+			synchronized (ReaderPost.class){
+				ReaderPost.instance = new ReaderPost(fichier);
+			}
+		}
+		return ReaderPost.instance;
+	}
+	
+    public static void reset(String adresseFichier) {
+        instance = new ReaderPost(adresseFichier);
+    }
+
+    public Post getCurrentPost(){
+    	return currentPost;
+    }
+    
+    
+    public Post readNextPost(){
     	String line = "";
     	
     	try {  		  
@@ -29,11 +47,20 @@ public class ReaderPost {
     	}catch(Exception e){
     		e.printStackTrace();
     	}
-    	
-    	return split(line);
+
+		if (line == null){
+			return new Post(new DateTime(), -1, -1, "");
+		}
+		else{
+			currentPost = createPost(line);
+			return currentPost;
+		}
     }
     
-    public static Post split(String line)
+    
+    
+    
+    public Post createPost(String line)
     {
     	
     	String[] list = line.split("\\|");

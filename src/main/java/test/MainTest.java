@@ -46,4 +46,28 @@ public class MainTest {
 		assertEquals(c.getTs(), Main.nextTick(p,c));
 	}
 
+	@Test
+	public void updateScorePost10(){
+		Post p = new Post(new DateTime("2010-02-09T04:05:20.777+0000") ,299101, 4661, "Michael Wang");
+		DateTime tk = new DateTime("2010-02-09T10:05:20.777+0000");
+		Main.updatePost(p, tk);
+		assertEquals(10, p.getScorePost());
+	}
+	
+	@Test
+	public void updateScorePost5(){
+		Post p = new Post(new DateTime("2010-02-09T04:05:20.777+0000") ,299101, 4661, "Michael Wang");
+		DateTime tk = new DateTime("2010-02-14T10:05:20.777+0000");
+		Main.updatePost(p, tk);
+		assertEquals(5, p.getScorePost());
+	}
+	
+	@Test
+	public void updateScorePost0(){
+		Post p = new Post(new DateTime("2010-02-09T04:05:20.777+0000") ,299101, 4661, "Michael Wang");
+		DateTime tk = new DateTime("2010-02-25T10:05:20.777+0000");
+		Main.updatePost(p, tk);
+		assertEquals(0, p.getScorePost());
+	}
+	
 }

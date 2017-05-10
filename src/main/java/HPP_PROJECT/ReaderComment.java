@@ -3,7 +3,6 @@ package HPP_PROJECT;
 import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
-import org.omg.CORBA.COMM_FAILURE;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -12,9 +11,9 @@ public final class ReaderComment {
 
     private BufferedReader BR;
     private static volatile ReaderComment instance = null;
-    private String adresseFichier = "../data/comments.dat";
+    private Comment currentComment;
 
-    private ReaderComment(){
+    private ReaderComment(String adresseFichier){
         try{
             BR = new BufferedReader(new FileReader(adresseFichier));
         }catch (Exception e){
@@ -22,16 +21,25 @@ public final class ReaderComment {
         }
     }
 
-    public final static ReaderComment getInstance(){
+    public final static ReaderComment getInstance(String adresseFichier){
         if(ReaderComment.instance == null){
             synchronized (ReaderComment.class){
-                ReaderComment.instance = new ReaderComment();
+                ReaderComment.instance = new ReaderComment(adresseFichier);
             }
         }
-        return instance;
+        return ReaderComment.instance;
+    }
+    
+    public static void reset(String adresseFichier) {
+        instance = new ReaderComment(adresseFichier);
+    }
+    
+    
+    public Comment getCurrentComment(){
+    	return currentComment;
     }
 
-    private Comment readNextComment() {
+    public Comment readNextComment() {
         String line = "vide";
 
         try {
@@ -44,11 +52,12 @@ public final class ReaderComment {
             return new Comment(new DateTime(), -1, -1, "", -1, -1);
         }
         else{
-            return createComment(line);
+        	currentComment = createComment(line);
+            return currentComment;
         }
     }
 
-    private Comment createComment(String line){
+    public Comment createComment(String line){
         String[] list = line.split("\\|");
         DateTimeFormatter formatter = DateTimeFormat.forPattern("yyyy-MM-dd'T'HH:mm:ss.SSSZ");
         DateTime dt = formatter.parseDateTime(list[0]);

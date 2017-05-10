@@ -6,16 +6,15 @@ import org.joda.time.DateTime;
 
 public class TraitementPost {
 	
-	public void traitement(DateTime tk, ArrayList<Post> tabPost, ReaderPost rdPost){
+	public static void traitement(DateTime tk, ArrayList<Post> tabPost, ReaderPost rdPost){
 		//ReaderPost rdPost = new ReaderPost("import/post.dat");
 		
-		Post pst = rdPost.readPost();
+		Post pst = rdPost.getCurrentPost();
 		
-		while(pst.getTs() == tk)
+		while(pst.getTs().equals(tk))
 		{
 			tabPost.add(pst);
-			
-			pst = rdPost.readPost();
+			pst = rdPost.readNextPost();
 		}
 	}
 }
