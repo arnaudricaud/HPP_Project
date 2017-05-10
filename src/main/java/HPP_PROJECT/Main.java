@@ -3,9 +3,7 @@ package HPP_PROJECT;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
+import java.util.*;
 
 import org.joda.time.DateTime;
 import org.joda.time.Duration;
@@ -127,6 +125,18 @@ public class Main {
 
 		}
 
+	}
+
+	public int countCommenters(Post post){
+		HashSet<Integer> commentersSet = new HashSet<Integer>();
+
+		for (Comment comment : tabComment) {
+			if(comment.getPost_commented() == post.getPost_id()){
+				commentersSet.add(comment.getUser_id());
+			}
+		}
+
+		return commentersSet.size();
 	}
 
 }
