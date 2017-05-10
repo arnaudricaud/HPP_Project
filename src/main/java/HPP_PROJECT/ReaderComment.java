@@ -3,7 +3,6 @@ package HPP_PROJECT;
 import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
-import org.omg.CORBA.COMM_FAILURE;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -27,7 +26,7 @@ public final class ReaderComment {
                 ReaderComment.instance = new ReaderComment(adresseFichier);
             }
         }
-        return instance;
+        return ReaderComment.instance;
     }
 
     public Comment readNextComment() {
