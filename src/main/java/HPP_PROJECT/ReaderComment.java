@@ -12,9 +12,8 @@ public final class ReaderComment {
 
     private BufferedReader BR;
     private static volatile ReaderComment instance = null;
-    private String adresseFichier = "../data/comments.dat";
 
-    private ReaderComment(){
+    private ReaderComment(String adresseFichier){
         try{
             BR = new BufferedReader(new FileReader(adresseFichier));
         }catch (Exception e){
@@ -22,16 +21,16 @@ public final class ReaderComment {
         }
     }
 
-    public final static ReaderComment getInstance(){
+    public final static ReaderComment getInstance(String adresseFichier){
         if(ReaderComment.instance == null){
             synchronized (ReaderComment.class){
-                ReaderComment.instance = new ReaderComment();
+                ReaderComment.instance = new ReaderComment(adresseFichier);
             }
         }
         return instance;
     }
 
-    private Comment readNextComment() {
+    public Comment readNextComment() {
         String line = "vide";
 
         try {
@@ -48,7 +47,7 @@ public final class ReaderComment {
         }
     }
 
-    private Comment createComment(String line){
+    public Comment createComment(String line){
         String[] list = line.split("\\|");
         DateTimeFormatter formatter = DateTimeFormat.forPattern("yyyy-MM-dd'T'HH:mm:ss.SSSZ");
         DateTime dt = formatter.parseDateTime(list[0]);
