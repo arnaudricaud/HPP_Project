@@ -112,21 +112,23 @@ public class Main {
 		}
 	}
 
-	public static void calculScore() {
-		// appel fonction
-		for (int i = 0; i < tabPost.size(); i++) {
-			for (int j = 0; j < tabComment.size(); j++) {
-
-				if (tabComment.get(j).getPost_commented() == tabPost.get(i).getPost_id()) {
-					tabPost.get(i).setScoreTotal(tabPost.get(i).getScoreTotal() + tabComment.get(j).getScore());
-
-				}
-
+	public static void calculScore(DateTime tk){
+		for(int i=0; i<tabPost.size(); i++)
+		{
+			updatePost(tabPost.get(i), tk);
+			for(int j=0; j<tabComment.size(); j++)
+			{	
+				if(tabComment.get(j).getPost_commented() == tabPost.get(i).getPost_id())
+				{
+					tabPost.get(i).setScoreTotal(tabPost.get(i).getScoreTotal() + tabComment.get(j).getScore());				
+				}						
 			}
-			supression();
-
+			if(tabPost.get(i).getScoreTotal() == 0)
+			{
+				tabPost.remove(i);
+			}
 		}
-
+		
 	}
 
 }
