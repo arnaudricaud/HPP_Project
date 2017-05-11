@@ -14,7 +14,7 @@ public class Main {
 
 	public static void main(String[] args) {
 		ReaderPost rdPost = ReaderPost.getInstance("ressources/data/posts.dat");
-		ReaderComment rdComment = ReaderComment.getInstance("ressources/data/comment.dat");
+		ReaderComment rdComment = ReaderComment.getInstance("ressources/data/comments.dat");
 		
 		rdPost.readNextPost();
 		rdComment.readNextComment();
