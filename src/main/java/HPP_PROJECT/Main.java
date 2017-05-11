@@ -14,7 +14,7 @@ public class Main {
 
 	public static void main(String[] args) {
 		ReaderPost rdPost = ReaderPost.getInstance("ressources/data/posts.dat");
-		ReaderComment rdComment = ReaderComment.getInstance("ressources/data/comments.dat");
+		ReaderComment rdComment = ReaderComment.getInstance("ressources/data/comments.dat"); //zbra
 		
 		rdPost.readNextPost();
 		rdComment.readNextComment();
@@ -35,24 +35,9 @@ public class Main {
 			suppression();
 			sortPost(tabPost);
 			writeTop3(tabPost, tk);
-			nextTick(rdPost.getCurrentPost(), rdComment.getCurrentComment());
+			tk = nextTick(rdPost.getCurrentPost(), rdComment.getCurrentComment());
 		}
 	
-		ArrayList<Post> expected = new ArrayList<Post>();
-		 expected.add(new Post(new DateTime("2010-02-01T05:12:32.921+0000")
-		 ,1039993, 3981, "Lei Liu"));
-		 expected.add(new Post(new DateTime("2010-02-02T19:53:43.226+0000")
-		 ,299101, 4661, "Michael Wang"));
-		expected.add(new Post(new DateTime("2010-02-03T19:53:43.226+0000"), 255120, 4661, "Michael Wang"));
-		expected.get(0).setScoreTotal(10);
-		expected.get(0).setNbCommentateur(1);
-		 expected.get(1).setScoreTotal(20);
-		 expected.get(1).setNbCommentateur(10);
-		 expected.get(2).setScoreTotal(30);
-		 expected.get(2).setNbCommentateur(5);
-		clearHistoriqueFile();
-		writeTop3(expected, new DateTime("2010-02-03T19:53:43.226+0000"));
-		writeTop3(expected, new DateTime("2010-02-03T20:53:43.226+0000"));
 	}
 
 	public ArrayList<Post> getTabPost() {
