@@ -1,6 +1,7 @@
 package HPP_PROJECT;
 
 import org.joda.time.DateTime;
+import org.joda.time.DateTimeZone;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 
@@ -48,8 +49,9 @@ public final class ReaderComment {
             e.printStackTrace();
         }
 
-        if (line == null){
-            return new Comment(new DateTime(), -1, -1, "", -1, -1);
+        if (line == null || line.equals("")){
+        	currentComment = new Comment(new DateTime(), -1, -1, "", -1, -1);
+            return currentComment;
         }
         else{
         	currentComment = createComment(line);
@@ -63,15 +65,16 @@ public final class ReaderComment {
         DateTime dt = formatter.parseDateTime(list[0]);
 
         if(list[5].equals("")){
-            list[5] = "-1";
+            return new Comment(dt,
+                    Long.parseLong(list[1]), Long.parseLong(list[2]),
+                    list[4],
+                    -1,  Long.parseLong(list[6]));
         }
         else{
-            list[6] = "-1";
+        	return new Comment(dt,
+                    Long.parseLong(list[1]), Long.parseLong(list[2]),
+                    list[4],
+                    Long.parseLong(list[5]), -1);
         }
-
-        return new Comment(dt,
-                Integer.parseInt(list[1]), Integer.parseInt(list[2]),
-                list[4],
-                Integer.parseInt(list[5]), Integer.parseInt(list[6]));
     }
 }

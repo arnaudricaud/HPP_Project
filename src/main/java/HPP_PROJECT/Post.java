@@ -5,8 +5,8 @@ import org.joda.time.DateTime;
 public class Post {
 
     private DateTime ts;
-    private int post_id;
-    private int user_id;
+    private long post_id;
+    private long user_id;
     private String user;
     private int scorePost;
     private int scoreTotal;
@@ -38,19 +38,19 @@ public class Post {
         this.ts = ts;
     }
 
-    public int getPost_id() {
+    public long getPost_id() {
         return post_id;
     }
 
-    public void setPost_id(int post_id) {
+    public void setPost_id(long post_id) {
         this.post_id = post_id;
     }
 
-    public int getUser_id() {
+    public long getUser_id() {
         return user_id;
     }
 
-    public void setUser_id(int user_id) {
+    public void setUser_id(long user_id) {
         this.user_id = user_id;
     }
 
@@ -113,10 +113,10 @@ public class Post {
 	
 
 	
-	public Post(DateTime time, int post_id, int user_id, String user) {
+	public Post(DateTime time, long l, long m, String user) {
         ts = time;
-        this.post_id = post_id;
-        this.user_id = user_id;
+        this.post_id = l;
+        this.user_id = m;
         this.user = user;
         this.scorePost = 10;
         this.scoreTotal = 10;

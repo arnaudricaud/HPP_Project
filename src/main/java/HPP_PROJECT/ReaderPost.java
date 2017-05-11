@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 
 import org.joda.time.DateTime;
+import org.joda.time.DateTimeZone;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 
@@ -49,7 +50,8 @@ public class ReaderPost {
     	}
 
 		if (line == null){
-			return new Post(new DateTime(), -1, -1, "");
+			currentPost = new Post(new DateTime(), -1, -1, "");
+			return currentPost;
 		}
 		else{
 			currentPost = createPost(line);
@@ -67,7 +69,7 @@ public class ReaderPost {
     	DateTimeFormatter formatter = DateTimeFormat.forPattern("yyyy-MM-dd'T'HH:mm:ss.SSSZ");
     	DateTime dt = formatter.parseDateTime(list[0]);
     	
-    	return new Post(dt, Integer.parseInt(list[1]), Integer.parseInt(list[2]), list[4]);
+    	return new Post(dt, Long.parseLong(list[1]),  Long.parseLong(list[2]), list[4]);
     }
     
     

@@ -11,10 +11,13 @@ import org.joda.time.Duration;
 public class Main {
 	static ArrayList<Post> tabPost = new ArrayList<Post>();
 	static ArrayList<Comment> tabComment = new ArrayList<Comment>();
-
+	public static int z = 0;
+	
+	
 	public static void main(String[] args) {
-		ReaderPost rdPost = ReaderPost.getInstance("ressources/data/posts.dat");
-		ReaderComment rdComment = ReaderComment.getInstance("ressources/data/comments.dat"); //zbra
+		clearHistoriqueFile();
+		ReaderPost rdPost = ReaderPost.getInstance("ressources/data/test/Q1Basic2/posts.dat");
+		ReaderComment rdComment = ReaderComment.getInstance("ressources/data/test/Q1Basic2/comments.dat"); //zbra
 		
 		rdPost.readNextPost();
 		rdComment.readNextComment();
@@ -24,18 +27,25 @@ public class Main {
 		{
 			TraitementPost.traitement(tk, tabPost, rdPost);
 			TraitementComment.traitement(tk, tabComment, tabPost, rdComment);
+			
 			for(int i = 0; i < tabComment.size(); i++)
 				updateComment(tabComment.get(i), tk);
-			
+
 			for (int i = 0; i < tabPost.size(); i++)
 			{
 				updatePost(tabPost.get(i), tk);
-				calculScore(tk);			
+				calculScore(tk);
 			}
+			
 			suppression();
 			sortPost(tabPost);
 			writeTop3(tabPost, tk);
 			tk = nextTick(rdPost.getCurrentPost(), rdComment.getCurrentComment());
+			z++;
+			if (z % 10 == 0){
+				System.out.println(z);
+			}
+			
 		}
 	
 	}
@@ -102,20 +112,20 @@ public class Main {
 		sortPost(tabPost);
 		try {
 			FileWriter writer = new FileWriter("export/historique.txt", true);
-			writer.write("<" + tk + ",");
+			writer.write(tk + ",");
 			for (int i = 0; i < 2; i++) {
 				if (i < tabPost.size()) {
 					writer.write(tabPost.get(i).getPost_id() + "," + tabPost.get(i).getUser() + ","
-							+ tabPost.get(i).getScoreTotal() + "," + tabPost.get(i).getNbCommentateur() + ",\r\n");
+							+ tabPost.get(i).getScoreTotal() + "," + tabPost.get(i).getNbCommentateur() + ",");
 				} else {
-					writer.write("-,-,-,-,\r\n");
+					writer.write("-,-,-,-,");
 				}
 			}
 			if (tabPost.size() >= 3) {
 				writer.write(tabPost.get(2).getPost_id() + "," + tabPost.get(2).getUser() + ","
-						+ tabPost.get(2).getScoreTotal() + "," + tabPost.get(2).getNbCommentateur() + ">\r\n");
+						+ tabPost.get(2).getScoreTotal() + "," + tabPost.get(2).getNbCommentateur() + "\r\n");
 			} else {
-				writer.write("-,-,-,->\r\n");
+				writer.write("-,-,-,-\r\n");
 			}
 			writer.close();
 		} catch (IOException e) {
@@ -141,7 +151,7 @@ public class Main {
 		{
 			if (tabPost.get(i).getScorePost() == 0) 
 			{
-				int idPost = tabPost.get(i).getPost_id();
+				long idPost = tabPost.get(i).getPost_id();
 				tabPost.remove(i);
 				i--;// Le remove reagence les index
 				for (int j = 0; j < tabComment.size(); j++) 
@@ -158,24 +168,20 @@ public class Main {
 	}
 
 	public static void calculScore(DateTime tk) {
+		
 		for (int i = 0; i < tabPost.size(); i++) {
-			updatePost(tabPost.get(i), tk);
+			tabPost.get(i).setScoreTotal(tabPost.get(i).getScorePost());
 			for (int j = 0; j < tabComment.size(); j++) {
 				if (tabComment.get(j).getPost_commented() == tabPost.get(i).getPost_id()) {
 					tabPost.get(i).setScoreTotal(tabPost.get(i).getScoreTotal() + tabComment.get(j).getScore());
 				}
 			}
-
-			if (tabPost.get(i).getScoreTotal() == 0) {
-				tabPost.remove(i);
-			}
-
 		}
 
 	}
 
 	public void countCommenters(Post post) {
-		HashSet<Integer> commentersSet = new HashSet<Integer>();
+		HashSet<Long> commentersSet = new HashSet<Long>();
 
 		for (Comment comment : tabComment) {
 			if (comment.getPost_commented() == post.getPost_id()) {
