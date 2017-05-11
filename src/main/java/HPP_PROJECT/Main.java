@@ -13,7 +13,6 @@ public class Main {
 	static ArrayList<Comment> tabComment = new ArrayList<Comment>();
 
 	public static void main(String[] args) {
-<<<<<<< HEAD
 		ReaderPost rdPost = ReaderPost.getInstance("ressources/data/posts.dat");
 		ReaderComment rdComment = ReaderComment.getInstance("ressources/data/comment.dat");
 		
@@ -37,10 +36,8 @@ public class Main {
 			sortPost(tabPost);
 			writeTop3(tabPost, tk);
 			nextTick(rdPost.getCurrentPost(), rdComment.getCurrentComment());
-			
 		}
-		
-=======
+	
 		ArrayList<Post> expected = new ArrayList<Post>();
 		 expected.add(new Post(new DateTime("2010-02-01T05:12:32.921+0000")
 		 ,1039993, 3981, "Lei Liu"));
@@ -56,7 +53,6 @@ public class Main {
 		clearHistoriqueFile();
 		writeTop3(expected, new DateTime("2010-02-03T19:53:43.226+0000"));
 		writeTop3(expected, new DateTime("2010-02-03T20:53:43.226+0000"));
->>>>>>> origin/master
 	}
 
 	public ArrayList<Post> getTabPost() {
@@ -184,12 +180,11 @@ public class Main {
 					tabPost.get(i).setScoreTotal(tabPost.get(i).getScoreTotal() + tabComment.get(j).getScore());
 				}
 			}
-<<<<<<< HEAD
-=======
+
 			if (tabPost.get(i).getScoreTotal() == 0) {
 				tabPost.remove(i);
 			}
->>>>>>> origin/master
+
 		}
 
 	}
