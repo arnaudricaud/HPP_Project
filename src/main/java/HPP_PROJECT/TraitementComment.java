@@ -3,6 +3,7 @@ package HPP_PROJECT;
 import java.util.ArrayList;
 
 import org.joda.time.DateTime;
+import org.joda.time.Duration;
 
 public class TraitementComment {
 
@@ -39,5 +40,19 @@ public class TraitementComment {
 			
 			cmt = rdComment.readNextComment();
 		}
+		for (int i = 0; i < tabComment.size(); i++)
+			updateComment(tabComment.get(i), tk);
 	}
+	
+	public static void updateComment(Comment c, DateTime tk) {
+		Duration diff = new Duration(c.getTs(), tk);
+		c.setAge((int) diff.getStandardDays());
+		if (c.getAge() < 10) {
+			c.setScore(10 - c.getAge());
+		} else {
+			c.setScore(0);
+		}
+	}
+	
+	
 }

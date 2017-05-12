@@ -44,17 +44,13 @@ public class Main {
 
 		DateTime tk = nextTick(rdPost.getCurrentPost(), rdComment.getCurrentComment());
 		while (tk != null) {
+			//ETAPE 1:
+			//Parralelisable:
 			TraitementPost.traitement(tk, tabPost, rdPost);
 			TraitementComment.traitement(tk, tabComment, tabPost, rdComment);
-
-			for (int i = 0; i < tabComment.size(); i++)
-				updateComment(tabComment.get(i), tk);
-
-			for (int i = 0; i < tabPost.size(); i++) {
-				updatePost(tabPost.get(i), tk);
-				calculScore(tk);
-			}
-
+			// Fin parralelisable
+			
+			calculScore(tk);
 			suppression();
 			sortPost(tabPost);
 			writeTop3(tabPost, tk);
@@ -73,26 +69,6 @@ public class Main {
 			} else {
 				return p.getTs();
 			}
-		}
-	}
-
-	public static void updatePost(Post p, DateTime tk) {
-		Duration diff = new Duration(p.getTs(), tk);
-		p.setAge((int) diff.getStandardDays());
-		if (p.getAge() < 10) {
-			p.setScorePost(10 - p.getAge());
-		} else {
-			p.setScorePost(0);
-		}
-	}
-
-	public static void updateComment(Comment c, DateTime tk) {
-		Duration diff = new Duration(c.getTs(), tk);
-		c.setAge((int) diff.getStandardDays());
-		if (c.getAge() < 10) {
-			c.setScore(10 - c.getAge());
-		} else {
-			c.setScore(0);
 		}
 	}
 

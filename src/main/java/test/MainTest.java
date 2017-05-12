@@ -10,6 +10,7 @@ import org.junit.Test;
 import HPP_PROJECT.Comment;
 import HPP_PROJECT.Main;
 import HPP_PROJECT.Post;
+import HPP_PROJECT.TraitementPost;
 
 public class MainTest {
 
@@ -52,7 +53,7 @@ public class MainTest {
 	public void updateScorePost10(){
 		Post p = new Post(new DateTime("2010-02-09T04:05:20.777+0000") ,299101, 4661, "Michael Wang");
 		DateTime tk = new DateTime("2010-02-09T10:05:20.777+0000");
-		Main.updatePost(p, tk);
+		TraitementPost.updatePost(p, tk);
 		assertEquals(10, p.getScorePost());
 	}
 	
@@ -60,7 +61,7 @@ public class MainTest {
 	public void updateScorePost5(){
 		Post p = new Post(new DateTime("2010-02-09T04:05:20.777+0000") ,299101, 4661, "Michael Wang");
 		DateTime tk = new DateTime("2010-02-14T10:05:20.777+0000");
-		Main.updatePost(p, tk);
+		TraitementPost.updatePost(p, tk);
 		assertEquals(5, p.getScorePost());
 	}
 	
@@ -68,7 +69,7 @@ public class MainTest {
 	public void updateScorePost0(){
 		Post p = new Post(new DateTime("2010-02-09T04:05:20.777+0000") ,299101, 4661, "Michael Wang");
 		DateTime tk = new DateTime("2010-02-25T10:05:20.777+0000");
-		Main.updatePost(p, tk);
+		TraitementPost.updatePost(p, tk);
 		assertEquals(0, p.getScorePost());
 	}
 	
