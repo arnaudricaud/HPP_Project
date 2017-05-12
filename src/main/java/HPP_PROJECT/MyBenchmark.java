@@ -31,7 +31,7 @@ public class MyBenchmark {
 
     @Benchmark
     public void testMethod() {
-        // place your benchmarked code here
+    	Main.traitementTotal();
     }
 
 }

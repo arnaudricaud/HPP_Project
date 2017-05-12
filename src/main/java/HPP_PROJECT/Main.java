@@ -15,6 +15,27 @@ public class Main {
 	
 	
 	public static void main(String[] args) {
+		traitementTotal();
+	}
+
+	public ArrayList<Post> getTabPost() {
+		return tabPost;
+	}
+
+	public void setTabPost(ArrayList<Post> tabPost) {
+		Main.tabPost = tabPost;
+	}
+
+	public ArrayList<Comment> getTabComment() {
+		return tabComment;
+	}
+
+	public void setTabComment(ArrayList<Comment> tabComment) {
+		Main.tabComment = tabComment;
+	}
+
+	public static void traitementTotal(){
+
 		clearHistoriqueFile();
 		ReaderPost rdPost = ReaderPost.getInstance("ressources/data/test/Q1Basic2/posts.dat");
 		ReaderComment rdComment = ReaderComment.getInstance("ressources/data/test/Q1Basic2/comments.dat"); //zbra
@@ -47,25 +68,9 @@ public class Main {
 			}
 			
 		}
+		
+	}
 	
-	}
-
-	public ArrayList<Post> getTabPost() {
-		return tabPost;
-	}
-
-	public void setTabPost(ArrayList<Post> tabPost) {
-		Main.tabPost = tabPost;
-	}
-
-	public ArrayList<Comment> getTabComment() {
-		return tabComment;
-	}
-
-	public void setTabComment(ArrayList<Comment> tabComment) {
-		Main.tabComment = tabComment;
-	}
-
 	public static DateTime nextTick(Post p, Comment c) {
 		if(p.getUser_id() == -1 && c.getComment_id() == -1)
 			return null;
