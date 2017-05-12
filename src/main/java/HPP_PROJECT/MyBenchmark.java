@@ -25,11 +25,19 @@
 
 package HPP_PROJECT;
 
+import java.util.concurrent.TimeUnit;
+
 import org.openjdk.jmh.annotations.Benchmark;
+import org.openjdk.jmh.annotations.Fork;
+import org.openjdk.jmh.annotations.Measurement;
+import org.openjdk.jmh.annotations.Warmup;
 
 public class MyBenchmark {
 
     @Benchmark
+    @Fork(value = 5)
+    @Measurement(iterations = 5, time = 2000, timeUnit = TimeUnit.MILLISECONDS)
+    @Warmup(iterations = 5, time = 2000, timeUnit = TimeUnit.MILLISECONDS)
     public void testMethod() {
     	Main.traitementTotal();
     }

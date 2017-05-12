@@ -11,8 +11,11 @@ import org.joda.time.Duration;
 public class Main {
 	static ArrayList<Post> tabPost = new ArrayList<Post>();
 	static ArrayList<Comment> tabComment = new ArrayList<Comment>();
+<<<<<<< HEAD
 	public static int z = 0;
 	static String str_tk = "";
+=======
+>>>>>>> origin/master
 	
 	
 	public static void main(String[] args) {
@@ -35,50 +38,49 @@ public class Main {
 		Main.tabComment = tabComment;
 	}
 
-	public static void traitementTotal(){
+	public static void traitementTotal() {
 
 		clearHistoriqueFile();
 		ReaderPost rdPost = ReaderPost.getInstance("ressources/data/test/Q1Basic2/posts.dat");
-		ReaderComment rdComment = ReaderComment.getInstance("ressources/data/test/Q1Basic2/comments.dat"); //zbra
-		
+		ReaderComment rdComment = ReaderComment.getInstance("ressources/data/test/Q1Basic2/comments.dat"); // zbra
+
 		rdPost.readNextPost();
 		rdComment.readNextComment();
+<<<<<<< HEAD
 		
 
 		DateTime tk = nextTick(rdPost.getCurrentPost(), rdComment.getCurrentComment());
 		
 		while(tk  != null)
 		{
+=======
+
+		DateTime tk = nextTick(rdPost.getCurrentPost(), rdComment.getCurrentComment());
+		while (tk != null) {
+>>>>>>> origin/master
 			TraitementPost.traitement(tk, tabPost, rdPost);
 			TraitementComment.traitement(tk, tabComment, tabPost, rdComment);
-			
-			for(int i = 0; i < tabComment.size(); i++)
+
+			for (int i = 0; i < tabComment.size(); i++)
 				updateComment(tabComment.get(i), tk);
 
-			for (int i = 0; i < tabPost.size(); i++)
-			{
+			for (int i = 0; i < tabPost.size(); i++) {
 				updatePost(tabPost.get(i), tk);
 				calculScore(tk);
 			}
-			
+
 			suppression();
 			sortPost(tabPost);
 			writeTop3(tabPost, tk, str_tk);
 			tk = nextTick(rdPost.getCurrentPost(), rdComment.getCurrentComment());
-			z++;
-			if (z % 10 == 0){
-				System.out.println(z);
-			}
-			
 		}
-		
+
 	}
-	
+
 	public static DateTime nextTick(Post p, Comment c) {
-		if(p.getUser_id() == -1 && c.getComment_id() == -1)
+		if (p.getUser_id() == -1 && c.getComment_id() == -1)
 			return null;
-		else
-		{
+		else {
 			long diff = p.getTs().getMillis() - c.getTs().getMillis();
 			if (diff >= 0) {
 				str_tk = c.getStr_ts();
@@ -155,30 +157,25 @@ public class Main {
 
 	}
 
-	public static void suppression() 
-	{
-		for (int i = 0; i < tabPost.size(); i++)
-		{
-			if (tabPost.get(i).getScorePost() == 0) 
-			{
+	public static void suppression() {
+		for (int i = 0; i < tabPost.size(); i++) {
+			if (tabPost.get(i).getScorePost() == 0) {
 				long idPost = tabPost.get(i).getPost_id();
 				tabPost.remove(i);
 				i--;// Le remove reagence les index
-				for (int j = 0; j < tabComment.size(); j++) 
-				{
-					 if(tabComment.get(j).getPost_commented() == idPost)
-					 {
+				for (int j = 0; j < tabComment.size(); j++) {
+					if (tabComment.get(j).getPost_commented() == idPost) {
 						tabComment.remove(j);
-					 	j--;
-					 }
+						j--;
+					}
 				}
-				
+
 			}
 		}
 	}
 
 	public static void calculScore(DateTime tk) {
-		
+
 		for (int i = 0; i < tabPost.size(); i++) {
 			tabPost.get(i).setScoreTotal(tabPost.get(i).getScorePost());
 			for (int j = 0; j < tabComment.size(); j++) {
