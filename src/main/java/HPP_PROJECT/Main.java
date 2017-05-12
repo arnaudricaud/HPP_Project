@@ -11,11 +11,8 @@ import org.joda.time.Duration;
 public class Main {
 	static ArrayList<Post> tabPost = new ArrayList<Post>();
 	static ArrayList<Comment> tabComment = new ArrayList<Comment>();
-<<<<<<< HEAD
 	public static int z = 0;
 	static String str_tk = "";
-=======
->>>>>>> origin/master
 	
 	
 	public static void main(String[] args) {
@@ -46,18 +43,9 @@ public class Main {
 
 		rdPost.readNextPost();
 		rdComment.readNextComment();
-<<<<<<< HEAD
-		
-
-		DateTime tk = nextTick(rdPost.getCurrentPost(), rdComment.getCurrentComment());
-		
-		while(tk  != null)
-		{
-=======
 
 		DateTime tk = nextTick(rdPost.getCurrentPost(), rdComment.getCurrentComment());
 		while (tk != null) {
->>>>>>> origin/master
 			TraitementPost.traitement(tk, tabPost, rdPost);
 			TraitementComment.traitement(tk, tabComment, tabPost, rdComment);
 
