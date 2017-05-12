@@ -55,6 +55,7 @@ public final class ReaderComment {
         }
         else{
         	currentComment = createComment(line);
+        	currentComment.setStr_ts(line);
             return currentComment;
         }
     }
@@ -63,6 +64,7 @@ public final class ReaderComment {
         String[] list = line.split("\\|");
         DateTimeFormatter formatter = DateTimeFormat.forPattern("yyyy-MM-dd'T'HH:mm:ss.SSSZ");
         DateTime dt = formatter.parseDateTime(list[0]);
+        
 
         if(list[5].equals("")){
             return new Comment(dt,

@@ -5,6 +5,7 @@ import org.joda.time.DateTime;
 public class Post {
 
     private DateTime ts;
+    private String str_ts;
     private long post_id;
     private long user_id;
     private String user;
@@ -14,7 +15,15 @@ public class Post {
     private int nbCommentateur; 
 
 
-    public int getNbCommentateur() {
+    public String getStr_ts() {
+		return str_ts;
+	}
+
+	public void setStr_ts(String str_ts) {
+		this.str_ts = str_ts;
+	}
+
+	public int getNbCommentateur() {
 		return nbCommentateur;
 	}
 

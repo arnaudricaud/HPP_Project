@@ -55,6 +55,7 @@ public class ReaderPost {
 		}
 		else{
 			currentPost = createPost(line);
+			currentPost.setStr_ts(line);
 			return currentPost;
 		}
     }

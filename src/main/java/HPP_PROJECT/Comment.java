@@ -6,13 +6,23 @@ public class Comment {
 
 
     private DateTime ts; //is the comment's timestamp
-    private long comment_id; // is the unique id of the comment
+    private String str_ts;
+	private long comment_id; // is the unique id of the comment
     private long user_id;// 	is the unique id of the user
     private String user; // 	is a string containing the actual user name
     private long comment_replied; // is the id of the comment being replied to (-1 if the tuple is a reply to a post)
     private long post_commented; // is the id of the post being commented (-1 if the tuple is a reply to a comment)
     private int score;
     private int age;
+    
+    public String getStr_ts() {
+  		return str_ts;
+  	}
+
+  	public void setStr_ts(String str_ts) {
+  		this.str_ts = str_ts;
+  	}
+
 
     public DateTime getTs() {
         return ts;
