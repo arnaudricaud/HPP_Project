@@ -13,7 +13,8 @@ public class ReaderPost {
 	private BufferedReader br;
 	private static volatile ReaderPost instance = null;
 	private Post currentPost;
-	
+	private String str_tk;
+
 	private ReaderPost(String fichier) {
 		try{
 			br = new BufferedReader(new FileReader(fichier));
@@ -55,7 +56,7 @@ public class ReaderPost {
 		}
 		else{
 			currentPost = createPost(line);
-			currentPost.setStr_ts(line);
+			currentPost.setStr_ts(str_tk);
 			return currentPost;
 		}
     }
@@ -65,10 +66,10 @@ public class ReaderPost {
     
     public Post createPost(String line)
     {
-    	
     	String[] list = line.split("\\|");
     	DateTimeFormatter formatter = DateTimeFormat.forPattern("yyyy-MM-dd'T'HH:mm:ss.SSSZ");
     	DateTime dt = formatter.parseDateTime(list[0]);
+		str_tk = list[0];
     	
     	return new Post(dt, Long.parseLong(list[1]),  Long.parseLong(list[2]), list[4]);
     }

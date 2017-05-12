@@ -45,22 +45,23 @@ public class Main {
 		rdComment.readNextComment();
 
 		DateTime tk = nextTick(rdPost.getCurrentPost(), rdComment.getCurrentComment());
+		TraitementPost tp = new TraitementPost(tk, tabPost, rdPost);
+		TraitementComment tc = new TraitementComment(tk, tabComment, tabPost, rdComment);
+		
 		while (tk != null) {
-			TraitementPost.traitement(tk, tabPost, rdPost);
-			TraitementComment.traitement(tk, tabComment, tabPost, rdComment);
-
-			for (int i = 0; i < tabComment.size(); i++)
-				updateComment(tabComment.get(i), tk);
-
-			for (int i = 0; i < tabPost.size(); i++) {
-				updatePost(tabPost.get(i), tk);
-				calculScore(tk);
-			}
-
+			//ETAPE 1:
+			//Parralelisable:
+			tp.traitement();
+			tc.traitement();
+			// Fin parralelisable
+			
+			calculScore(tk);
 			suppression();
 			sortPost(tabPost);
 			writeTop3(tabPost, tk, str_tk);
 			tk = nextTick(rdPost.getCurrentPost(), rdComment.getCurrentComment());
+			tp.setTk(tk);
+			tc.setTk(tk);
 		}
 
 	}
@@ -80,30 +81,15 @@ public class Main {
 		}
 	}
 
-	public static void updatePost(Post p, DateTime tk) {
-		Duration diff = new Duration(p.getTs(), tk);
-		p.setAge((int) diff.getStandardDays());
-		if (p.getAge() < 10) {
-			p.setScorePost(10 - p.getAge());
-		} else {
-			p.setScorePost(0);
-		}
-	}
-
-	public static void updateComment(Comment c, DateTime tk) {
-		Duration diff = new Duration(c.getTs(), tk);
-		c.setAge((int) diff.getStandardDays());
-		if (c.getAge() < 10) {
-			c.setScore(10 - c.getAge());
-		} else {
-			c.setScore(0);
-		}
-	}
-
 	public static void sortPost(ArrayList<Post> tabPost) {
 		Collections.sort(tabPost, new Comparator<Post>() {
 			public int compare(Post post1, Post post2) {
-				return ((Integer) post2.getScoreTotal()).compareTo((Integer) post1.getScoreTotal());
+				Integer i = ((Integer) post2.getScoreTotal()).compareTo((Integer) post1.getScoreTotal());
+				if (i != 0){
+					return i;
+				} else {
+					return post2.getTs().compareTo(post1.getTs());
+				}
 			}
 		});
 	}

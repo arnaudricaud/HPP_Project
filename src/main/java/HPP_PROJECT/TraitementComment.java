@@ -3,10 +3,25 @@ package HPP_PROJECT;
 import java.util.ArrayList;
 
 import org.joda.time.DateTime;
+import org.joda.time.Duration;
 
-public class TraitementComment {
+public class TraitementComment implements Runnable{
 
-	public static void traitement(DateTime tk, ArrayList<Comment> tabComment, ArrayList<Post> tabPost, ReaderComment rdComment) {
+	private DateTime tk;
+	private ArrayList<Comment> tabComment;
+	private ArrayList<Post> tabPost;
+	private ReaderComment rdComment;
+	
+	public TraitementComment(DateTime tk, ArrayList<Comment> tabComment, ArrayList<Post> tabPost,
+			ReaderComment rdComment) {
+		super();
+		this.tk = tk;
+		this.tabComment = tabComment;
+		this.tabPost = tabPost;
+		this.rdComment = rdComment;
+	}
+
+	public void traitement() {
 
 		Boolean truePost;
 		
@@ -39,5 +54,33 @@ public class TraitementComment {
 			
 			cmt = rdComment.readNextComment();
 		}
+		for (int i = 0; i < tabComment.size(); i++)
+			updateComment(tabComment.get(i), tk);
 	}
+	
+	public DateTime getTk() {
+		return tk;
+	}
+
+	public void setTk(DateTime tk) {
+		this.tk = tk;
+	}
+
+	public static void updateComment(Comment c, DateTime tk) {
+		Duration diff = new Duration(c.getTs(), tk);
+		c.setAge((int) diff.getStandardDays());
+		if (c.getAge() < 10) {
+			c.setScore(10 - c.getAge());
+		} else {
+			c.setScore(0);
+		}
+	}
+
+	@Override
+	public void run() {
+		traitement();
+		
+	}
+	
+	
 }
