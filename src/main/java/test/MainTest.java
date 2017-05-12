@@ -118,9 +118,10 @@ public class MainTest {
 
     @Test
     public void traitementTotalTest() {
-        Main.traitementTotal();
+        Main main = new Main();
+        main.traitementTotal();
 
-        File file1 = new File("ressources/data/test/Q1Basic2/_expectedQ1.txt");
+        File file1 = new File("ressources/data/test/Q1BigTest/_expectedQ1.txt");
         File file2 = new File("export/historique.txt");
 
         Boolean sameFile = false;

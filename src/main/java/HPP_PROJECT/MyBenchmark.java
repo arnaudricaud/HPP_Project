@@ -39,7 +39,8 @@ public class MyBenchmark {
     @Measurement(iterations = 5, time = 2000, timeUnit = TimeUnit.MILLISECONDS)
     @Warmup(iterations = 5, time = 2000, timeUnit = TimeUnit.MILLISECONDS)
     public void testMethod() {
-    	Main.traitementTotal();
+        Main main = new Main();
+    	main.traitementTotal();
     }
 
 }
