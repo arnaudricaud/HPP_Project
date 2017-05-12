@@ -13,6 +13,7 @@ public final class ReaderComment {
     private BufferedReader BR;
     private static volatile ReaderComment instance = null;
     private Comment currentComment;
+    private String str_tk;
 
     private ReaderComment(String adresseFichier){
         try{
@@ -55,15 +56,18 @@ public final class ReaderComment {
         }
         else{
         	currentComment = createComment(line);
-        	currentComment.setStr_ts(line);
+        	currentComment.setStr_ts(str_tk);
             return currentComment;
         }
     }
 
     public Comment createComment(String line){
         String[] list = line.split("\\|");
+        
+        
         DateTimeFormatter formatter = DateTimeFormat.forPattern("yyyy-MM-dd'T'HH:mm:ss.SSSZ");
         DateTime dt = formatter.parseDateTime(list[0]);
+        str_tk = list[0];
         
 
         if(list[5].equals("")){

@@ -11,6 +11,8 @@ import org.joda.time.Duration;
 public class Main {
 	static ArrayList<Post> tabPost = new ArrayList<Post>();
 	static ArrayList<Comment> tabComment = new ArrayList<Comment>();
+	public static int z = 0;
+	static String str_tk = "";
 	
 	
 	public static void main(String[] args) {
@@ -53,7 +55,7 @@ public class Main {
 			calculScore(tk);
 			suppression();
 			sortPost(tabPost);
-			writeTop3(tabPost, tk);
+			writeTop3(tabPost, tk, str_tk);
 			tk = nextTick(rdPost.getCurrentPost(), rdComment.getCurrentComment());
 		}
 
@@ -65,8 +67,10 @@ public class Main {
 		else {
 			long diff = p.getTs().getMillis() - c.getTs().getMillis();
 			if (diff >= 0) {
+				str_tk = c.getStr_ts();
 				return c.getTs();
 			} else {
+				str_tk = p.getStr_ts();
 				return p.getTs();
 			}
 		}
@@ -80,11 +84,11 @@ public class Main {
 		});
 	}
 
-	public static void writeTop3(ArrayList<Post> tabPost, DateTime tk) {
+	public static void writeTop3(ArrayList<Post> tabPost, DateTime tk, String str_tk) {
 		sortPost(tabPost);
 		try {
 			FileWriter writer = new FileWriter("export/historique.txt", true);
-			writer.write(tk + ",");
+			writer.write(str_tk + ",");
 			for (int i = 0; i < 2; i++) {
 				if (i < tabPost.size()) {
 					writer.write(tabPost.get(i).getPost_id() + "," + tabPost.get(i).getUser() + ","
