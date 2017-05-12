@@ -5,9 +5,23 @@ import java.util.ArrayList;
 import org.joda.time.DateTime;
 import org.joda.time.Duration;
 
-public class TraitementComment {
+public class TraitementComment implements Runnable{
 
-	public static void traitement(DateTime tk, ArrayList<Comment> tabComment, ArrayList<Post> tabPost, ReaderComment rdComment) {
+	private DateTime tk;
+	private ArrayList<Comment> tabComment;
+	private ArrayList<Post> tabPost;
+	private ReaderComment rdComment;
+	
+	public TraitementComment(DateTime tk, ArrayList<Comment> tabComment, ArrayList<Post> tabPost,
+			ReaderComment rdComment) {
+		super();
+		this.tk = tk;
+		this.tabComment = tabComment;
+		this.tabPost = tabPost;
+		this.rdComment = rdComment;
+	}
+
+	public void traitement() {
 
 		Boolean truePost;
 		
@@ -44,6 +58,14 @@ public class TraitementComment {
 			updateComment(tabComment.get(i), tk);
 	}
 	
+	public DateTime getTk() {
+		return tk;
+	}
+
+	public void setTk(DateTime tk) {
+		this.tk = tk;
+	}
+
 	public static void updateComment(Comment c, DateTime tk) {
 		Duration diff = new Duration(c.getTs(), tk);
 		c.setAge((int) diff.getStandardDays());
@@ -52,6 +74,12 @@ public class TraitementComment {
 		} else {
 			c.setScore(0);
 		}
+	}
+
+	@Override
+	public void run() {
+		traitement();
+		
 	}
 	
 	

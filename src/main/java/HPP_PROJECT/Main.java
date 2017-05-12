@@ -45,11 +45,14 @@ public class Main {
 		rdComment.readNextComment();
 
 		DateTime tk = nextTick(rdPost.getCurrentPost(), rdComment.getCurrentComment());
+		TraitementPost tp = new TraitementPost(tk, tabPost, rdPost);
+		TraitementComment tc = new TraitementComment(tk, tabComment, tabPost, rdComment);
+		
 		while (tk != null) {
 			//ETAPE 1:
 			//Parralelisable:
-			TraitementPost.traitement(tk, tabPost, rdPost);
-			TraitementComment.traitement(tk, tabComment, tabPost, rdComment);
+			tp.traitement();
+			tc.traitement();
 			// Fin parralelisable
 			
 			calculScore(tk);
@@ -57,6 +60,8 @@ public class Main {
 			sortPost(tabPost);
 			writeTop3(tabPost, tk, str_tk);
 			tk = nextTick(rdPost.getCurrentPost(), rdComment.getCurrentComment());
+			tp.setTk(tk);
+			tc.setTk(tk);
 		}
 
 	}
@@ -79,7 +84,12 @@ public class Main {
 	public static void sortPost(ArrayList<Post> tabPost) {
 		Collections.sort(tabPost, new Comparator<Post>() {
 			public int compare(Post post1, Post post2) {
-				return ((Integer) post2.getScoreTotal()).compareTo((Integer) post1.getScoreTotal());
+				Integer i = ((Integer) post2.getScoreTotal()).compareTo((Integer) post1.getScoreTotal());
+				if (i != 0){
+					return i;
+				} else {
+					return post2.getTs().compareTo(post1.getTs());
+				}
 			}
 		});
 	}

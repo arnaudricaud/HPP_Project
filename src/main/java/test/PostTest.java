@@ -54,9 +54,11 @@ public class PostTest {
 		expected.get(0).setAge(1);
 		expected.get(0).setScorePost(9);
 		expected.add(new Post(new DateTime("2010-02-02T19:53:43.226+0000") ,299101, 4661, "Michael Wang"));
-		TraitementPost.traitement(new DateTime("2010-02-01T05:12:32.921+0000"), actual, reader);
-		TraitementPost.traitement(new DateTime("2010-02-02T19:53:43.226+0000"), actual, reader);
-		
+		TraitementPost tp = new TraitementPost(new DateTime("2010-02-01T05:12:32.921+0000"), actual, reader);
+		tp.traitement();
+		tp.setTk(new DateTime("2010-02-02T19:53:43.226+0000"));
+		tp.traitement();
+
 		Boolean test;
 		if ((actual.get(0).equals(expected.get(0))) && (actual.get(1).equals(expected.get(1)))){
 			test = true;

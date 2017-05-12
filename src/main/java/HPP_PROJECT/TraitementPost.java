@@ -5,9 +5,21 @@ import java.util.ArrayList;
 import org.joda.time.DateTime;
 import org.joda.time.Duration;
 
-public class TraitementPost {
+public class TraitementPost implements Runnable{
 	
-	public static void traitement(DateTime tk, ArrayList<Post> tabPost, ReaderPost rdPost){
+	private DateTime tk;
+	private ArrayList<Post> tabPost;
+	private ReaderPost rdPost;
+	
+
+	public TraitementPost(DateTime tk, ArrayList<Post> tabPost, ReaderPost rdPost) {
+		super();
+		this.tk = tk;
+		this.tabPost = tabPost;
+		this.rdPost = rdPost;
+	}
+
+	public void traitement(){
 		//ReaderPost rdPost = new ReaderPost("import/post.dat");
 		
 		Post pst = rdPost.getCurrentPost();
@@ -29,6 +41,19 @@ public class TraitementPost {
 		} else {
 			p.setScorePost(0);
 		}
+	}
+
+	@Override
+	public void run() {
+		traitement();
+	}
+
+	public DateTime getTk() {
+		return tk;
+	}
+
+	public void setTk(DateTime tk) {
+		this.tk = tk;
 	}
 	
 }

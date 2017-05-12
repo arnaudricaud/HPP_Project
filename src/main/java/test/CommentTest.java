@@ -49,9 +49,10 @@ public class CommentTest {
 		ArrayList<Comment> actual = new ArrayList<Comment>();
 		expected.add(new Comment(new DateTime("2010-02-09T04:05:20.777+0000") ,529590, 2886, "Baoping Wu", -1, 1039993));
 		expected.add(new Comment(new DateTime("2010-02-09T04:20:53.281+0000") ,529589, 2886, "Baoping Wu", -1, 299101));
-		TraitementComment.traitement(new DateTime("2010-02-09T04:05:20.777+0000"), actual, tabPost, reader);
-		TraitementComment.traitement(new DateTime("2010-02-09T04:20:53.281+0000"), actual, tabPost, reader);
-
+		TraitementComment tc = new TraitementComment(new DateTime("2010-02-09T04:05:20.777+0000"), actual, tabPost, reader);
+		tc.traitement();
+		tc.setTk(new DateTime("2010-02-09T04:20:53.281+0000"));
+		tc.traitement();
 		Boolean test;
 		if ((actual.get(0).equals(expected.get(0))) && (actual.get(1).equals(expected.get(1)))){
 			test = true;
@@ -76,10 +77,15 @@ public class CommentTest {
 		expected.add(new Comment(new DateTime("2010-02-09T04:05:20.777+0000") ,529590, 2886, "Baoping Wu", -1, 1039993));
 		expected.add(new Comment(new DateTime("2010-02-09T04:20:53.281+0000") ,529589, 2886, "Baoping Wu", -1, 299101));
 		expected.add(new Comment(new DateTime("2010-02-09T06:08:38.206+0000") ,529594, 3633, "Jun Wu", 529590, 1039993));
-		TraitementComment.traitement(new DateTime("2010-02-09T04:05:20.777+0000"), actual, tabPost, reader);
-		TraitementComment.traitement(new DateTime("2010-02-09T04:20:53.281+0000"), actual, tabPost, reader);
-		TraitementComment.traitement(new DateTime("2010-02-09T05:19:19.802+0000"), actual, tabPost, reader);
-		TraitementComment.traitement(new DateTime("2010-02-09T06:08:38.206+0000"), actual, tabPost, reader);
+		
+		TraitementComment tc = new TraitementComment(new DateTime("2010-02-09T04:05:20.777+0000"), actual, tabPost, reader);
+		tc.traitement();
+		tc.setTk(new DateTime("2010-02-09T04:20:53.281+0000"));
+		tc.traitement();
+		tc.setTk(new DateTime("2010-02-09T05:19:19.802+0000"));
+		tc.traitement();
+		tc.setTk(new DateTime("2010-02-09T06:08:38.206+0000"));
+		tc.traitement();
 		
 		Boolean test;
 		if ((actual.get(0).equals(expected.get(0))) && (actual.get(1).equals(expected.get(1)))){
