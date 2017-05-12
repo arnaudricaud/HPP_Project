@@ -2,7 +2,10 @@ package test;
 
 import static org.junit.Assert.*;
 
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
+import java.util.Scanner;
 
 import org.joda.time.DateTime;
 import org.junit.Test;
@@ -112,5 +115,30 @@ public class MainTest {
 		test.countCommenters(p);
 		assertEquals(3, p.getNbCommentateur());
 	}
-	
+
+    @Test
+    public void traitementTotalTest() {
+        Main.traitementTotal();
+
+        File file1 = new File("ressources/data/test/Q1Basic2/_expectedQ1.txt");
+        File file2 = new File("export/historique.txt");
+
+        Boolean sameFile = false;
+
+        try {
+            Scanner scnr1 = new Scanner(file1);
+            Scanner scnr2 = new Scanner(file2);
+
+            while(!sameFile && scnr1.hasNext() && scnr2.hasNext()){
+                sameFile = !scnr1.nextLine().equals(scnr2.nextLine());
+            }
+
+            sameFile = !sameFile && !(scnr1.hasNext()||scnr2.hasNext());
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        assertTrue(sameFile);
+    }
+
 }
