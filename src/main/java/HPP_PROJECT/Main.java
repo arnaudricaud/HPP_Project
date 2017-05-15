@@ -13,10 +13,13 @@ public class Main {
 	static ArrayList<Comment> tabComment = new ArrayList<Comment>();
 	public static int z = 0;
 	static String str_tk = "";
-	
-	
-	public static void main(String[] args) {
-		traitementTotal();
+    private ArrayList<Post> displayedPosts = new ArrayList<Post>();
+
+
+
+    public static void main(String[] args) {
+	    Main main = new Main();
+		main.traitementTotal();
 	}
 
 	public ArrayList<Post> getTabPost() {
@@ -35,11 +38,11 @@ public class Main {
 		Main.tabComment = tabComment;
 	}
 
-	public static void traitementTotal() {
+	public void traitementTotal() {
 
 		clearHistoriqueFile();
-		ReaderPost rdPost = ReaderPost.getInstance("ressources/data/test/Q1Basic2/posts.dat");
-		ReaderComment rdComment = ReaderComment.getInstance("ressources/data/test/Q1Basic2/comments.dat"); // zbra
+		ReaderPost rdPost = ReaderPost.getInstance("ressources/data/test/Q1Case2/posts.dat");
+		ReaderComment rdComment = ReaderComment.getInstance("ressources/data/test/Q1Case2/comments.dat"); // zbra
 
 		rdPost.readNextPost();
 		rdComment.readNextComment();
@@ -47,7 +50,7 @@ public class Main {
 		DateTime tk = nextTick(rdPost.getCurrentPost(), rdComment.getCurrentComment());
 		TraitementPost tp = new TraitementPost(tk, tabPost, rdPost);
 		TraitementComment tc = new TraitementComment(tk, tabComment, tabPost, rdComment);
-		
+
 		while (tk != null) {
 			//ETAPE 1:
 			//Parralelisable:
@@ -58,8 +61,13 @@ public class Main {
 			calculScore(tk);
 			suppression();
 			sortPost(tabPost);
-			writeTop3(tabPost, tk, str_tk);
-			tk = nextTick(rdPost.getCurrentPost(), rdComment.getCurrentComment());
+            System.out.println("tabPost : " + tabPost);
+            System.out.println("display : " + displayedPosts);
+            if(!checkDisplayedPosts(displayedPosts)){
+                System.out.println("write");
+                writeTop3(tabPost, tk, str_tk);
+            }
+            tk = nextTick(rdPost.getCurrentPost(), rdComment.getCurrentComment());
 			tp.setTk(tk);
 			tc.setTk(tk);
 		}
@@ -94,13 +102,15 @@ public class Main {
 		});
 	}
 
-	public static void writeTop3(ArrayList<Post> tabPost, DateTime tk, String str_tk) {
+	public void writeTop3(ArrayList<Post> tabPost, DateTime tk, String str_tk) {
 		sortPost(tabPost);
+        displayedPosts = new ArrayList<Post>();
 		try {
 			FileWriter writer = new FileWriter("export/historique.txt", true);
 			writer.write(str_tk + ",");
 			for (int i = 0; i < 2; i++) {
 				if (i < tabPost.size()) {
+				    displayedPosts.add(tabPost.get(i));
 					writer.write(tabPost.get(i).getPost_id() + "," + tabPost.get(i).getUser() + ","
 							+ tabPost.get(i).getScoreTotal() + "," + tabPost.get(i).getNbCommentateur() + ",");
 				} else {
@@ -108,6 +118,7 @@ public class Main {
 				}
 			}
 			if (tabPost.size() >= 3) {
+			    displayedPosts.add(tabPost.get(2));
 				writer.write(tabPost.get(2).getPost_id() + "," + tabPost.get(2).getUser() + ","
 						+ tabPost.get(2).getScoreTotal() + "," + tabPost.get(2).getNbCommentateur() + "\r\n");
 			} else {
@@ -148,7 +159,7 @@ public class Main {
 		}
 	}
 
-	public static void calculScore(DateTime tk) {
+	public void calculScore(DateTime tk) {
 
 		for (int i = 0; i < tabPost.size(); i++) {
 			tabPost.get(i).setScoreTotal(tabPost.get(i).getScorePost());
@@ -157,6 +168,8 @@ public class Main {
 					tabPost.get(i).setScoreTotal(tabPost.get(i).getScoreTotal() + tabComment.get(j).getScore());
 				}
 			}
+
+			countCommenters(tabPost.get(i));
 		}
 
 	}
@@ -171,5 +184,24 @@ public class Main {
 		}
 		post.setNbCommentateur(commentersSet.size());
 	}
+
+	public boolean checkDisplayedPosts(ArrayList<Post> displayedPosts){
+	    boolean samePosts = true;
+        int index = 0;
+
+        if(displayedPosts.size() < tabPost.size() && tabPost.size() < 4){
+            for(int nbRajout = 0; nbRajout < tabPost.size() - displayedPosts.size(); ++nbRajout){
+                displayedPosts.add(null);
+            }
+        }
+
+        sortPost(tabPost);
+        while(index < tabPost.size() && index < 3){
+            samePosts = samePosts && tabPost.get(index).equals(displayedPosts.get(index));
+            ++index;
+        }
+
+        return samePosts;
+    }
 
 }

@@ -121,7 +121,7 @@ public class MainTest {
         Main main = new Main();
         main.traitementTotal();
 
-        File file1 = new File("ressources/data/test/Q1BigTest/_expectedQ1.txt");
+        File file1 = new File("ressources/data/test/Q1Case2/_expectedQ1.txt");
         File file2 = new File("export/historique.txt");
 
         Boolean sameFile = false;
