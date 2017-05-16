@@ -19,7 +19,7 @@ public class Main {
 
     public static void main(String[] args) {
 	    Main main = new Main();
-		main.traitementTotal();
+		main.traitementTotal("ressources/data/test/Q1Case2/posts.dat", "ressources/data/test/Q1Case2/comments.dat");
 	}
 
 	public ArrayList<Post> getTabPost() {
@@ -38,11 +38,11 @@ public class Main {
 		Main.tabComment = tabComment;
 	}
 
-	public void traitementTotal() {
+	public void traitementTotal(String postFile, String commentFile) {
 
 		clearHistoriqueFile();
-		ReaderPost rdPost = ReaderPost.getInstance("ressources/data/test/Q1Case2/posts.dat");
-		ReaderComment rdComment = ReaderComment.getInstance("ressources/data/test/Q1Case2/comments.dat"); // zbra
+		ReaderPost rdPost = ReaderPost.getInstance(postFile);
+		ReaderComment rdComment = ReaderComment.getInstance(commentFile); // zbra
 
 		rdPost.readNextPost();
 		rdComment.readNextComment();
@@ -61,10 +61,7 @@ public class Main {
 			calculScore(tk);
 			suppression();
 			sortPost(tabPost);
-            System.out.println("tabPost : " + tabPost);
-            System.out.println("display : " + displayedPosts);
             if(!checkDisplayedPosts(displayedPosts)){
-                System.out.println("write");
                 writeTop3(tabPost, tk, str_tk);
             }
             tk = nextTick(rdPost.getCurrentPost(), rdComment.getCurrentComment());

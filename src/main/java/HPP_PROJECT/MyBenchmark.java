@@ -40,7 +40,7 @@ public class MyBenchmark {
     @Warmup(iterations = 5, time = 2000, timeUnit = TimeUnit.MILLISECONDS)
     public void testMethod() {
         Main main = new Main();
-    	main.traitementTotal();
+    	main.traitementTotal("ressources/data/test/Q1Case2/posts.dat", "ressources/data/test/Q1Case2/comments.dat");
     }
 
 }

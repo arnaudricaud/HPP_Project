@@ -119,7 +119,7 @@ public class MainTest {
     @Test
     public void traitementTotalTest() {
         Main main = new Main();
-        main.traitementTotal();
+        main.traitementTotal("ressources/data/test/Q1Case2/posts.dat", "ressources/data/test/Q1Case2/comments.dat");
 
         File file1 = new File("ressources/data/test/Q1Case2/_expectedQ1.txt");
         File file2 = new File("export/historique.txt");
