@@ -20,7 +20,6 @@ public class FileTest {
 		Main main = new Main();
 		main.getTabPost().clear();
 		main.getTabComment().clear();
-		main.getDisplayedPosts().clear();
 	}
 	
 	

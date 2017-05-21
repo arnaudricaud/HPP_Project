@@ -10,15 +10,15 @@ import org.joda.time.DateTime;
 public class Main {
 	static BlockingQueue<Post> queuePost = new ArrayBlockingQueue<Post>(1000);
 	static BlockingQueue<Comment> queueComment = new ArrayBlockingQueue<Comment>(1000);
-	//static BlockingQueue<Post> queueTop3 = new ArrayBlockingQueue<Post>(1000);
-	
+	// static BlockingQueue<Post> queueTop3 = new
+	// ArrayBlockingQueue<Post>(1000);
+
 	static ArrayList<Post> tabPost = new ArrayList<Post>();
 	static ArrayList<Comment> tabComment = new ArrayList<Comment>();
 	public static int z = 0;
-	static String str_tk = "";
 
-    public static void main(String[] args) {
-	    Main main = new Main();
+	public static void main(String[] args) {
+		Main main = new Main();
 		main.traitementTotal("ressources/data/test/Q1Case2/posts.dat", "ressources/data/test/Q1Case2/comments.dat");
 	}
 
@@ -40,55 +40,40 @@ public class Main {
 
 	public void traitementTotal(String postFile, String commentFile) {
 		clearHistoriqueFile();
+
 		ReaderPost rdPost = ReaderPost.getInstance(postFile);
-		ReaderComment rdComment = ReaderComment.getInstance(commentFile); // zbra
+		ReaderComment rdComment = ReaderComment.getInstance(commentFile);
 
-		rdPost.readNextPost();
-		rdComment.readNextComment();
+		// Thread PostReader
+		TraitementPost tp = new TraitementPost(queuePost, rdPost);
+		Thread thread = new Thread(tp);
+		thread.setName("PostReader");
+		thread.start();
 
-		DateTime tk = nextTick(rdPost.getCurrentPost(), rdComment.getCurrentComment());
+		// Thread CommentReader
+		TraitementComment tc = new TraitementComment(queueComment, rdComment);
+		Thread thread2 = new Thread(tc);
+		thread2.setName("CommentReader");
+		thread2.start();
 
-		while (tk != null) {			
-			//Thread post
-			TraitementPost tp = new TraitementPost(tk, queuePost, rdPost);
-			Thread thread = new Thread(tp);
-			thread.setName("Post " + tk);
-			thread.start();
-			
-			//Thread Comment
-			TraitementComment tc = new TraitementComment(tk, queueComment, rdComment);		
-			Thread thread2 = new Thread(tc);
-			thread2.setName("Comment " + tk);
-			thread2.start();
-			
-			//Thread Traitement
-			TraitementScore ts = new TraitementScore(tk, queuePost, queueComment, str_tk);	
-			Thread thread3 = new Thread(ts);
-			thread3.setName("Score " + tk);
-			thread3.start();
-			
-            tk = nextTick(rdPost.getCurrentPost(), rdComment.getCurrentComment());
-			tp.setTk(tk);
-			tc.setTk(tk);
+		System.out.println("START");
+
+		// Thread Caclul
+		TraitementScore ts = new TraitementScore(queuePost, queueComment);
+		Thread thread3 = new Thread(ts);
+		thread3.setName("Score Calculator");
+		thread3.start();
+		
+		try {
+			thread3.join();
+			thread2.join();
+			thread.join();
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
-
+		
 	}
-
-	public static DateTime nextTick(Post p, Comment c) {
-		if (p.getUser_id() == -1 && c.getComment_id() == -1)
-			return null;
-		else {
-			long diff = p.getTs().getMillis() - c.getTs().getMillis();
-			if (diff >= 0) {
-				str_tk = c.getStr_ts();
-				return c.getTs();
-			} else {
-				str_tk = p.getStr_ts();
-				return p.getTs();
-			}
-		}
-	}
-
 
 	public static void clearHistoriqueFile() {
 		try {

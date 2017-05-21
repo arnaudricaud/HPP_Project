@@ -4,46 +4,43 @@ import java.util.concurrent.BlockingQueue;
 
 import org.joda.time.DateTime;
 
-public class TraitementComment implements Runnable{
+public class TraitementComment implements Runnable {
 
-	private DateTime tk;
 	private BlockingQueue<Comment> queueComment;
 	private ReaderComment rdComment;
-	
-	public TraitementComment(DateTime tk, BlockingQueue<Comment> queueComment, ReaderComment rdComment) {
+
+	public TraitementComment(BlockingQueue<Comment> queueComment, ReaderComment rdComment) {
 		super();
-		this.tk = tk;
 		this.queueComment = queueComment;
 		this.rdComment = rdComment;
+		rdComment.readNextComment();
 	}
 
-	public void traitement() {	
+	public void traitement() {
 		Comment cmt = rdComment.getCurrentComment();
+		while (cmt.getUser_id() != -1) {
+			try {
+				queueComment.put(cmt);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			cmt = rdComment.readNextComment();
+		}
 		
 		try {
+			//POISONPILL
 			queueComment.put(cmt);
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
-		cmt = rdComment.readNextComment();
+		System.out.println("ReaderComment => END");
 	}
 	
-	public DateTime getTk() {
-		return tk;
-	}
-
-
-	public void setTk(DateTime tk) {
-		this.tk = tk;
-	}
-
 	@Override
 	public void run() {
 		traitement();
-		
 	}
-	
-	
+
 }

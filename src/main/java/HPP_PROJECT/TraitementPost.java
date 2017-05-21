@@ -4,31 +4,38 @@ import java.util.concurrent.BlockingQueue;
 
 import org.joda.time.DateTime;
 
+public class TraitementPost implements Runnable {
 
-public class TraitementPost implements Runnable{
-	
-	private DateTime tk;
 	private BlockingQueue<Post> queuePost;
 	private ReaderPost rdPost;
-	
 
-	public TraitementPost(DateTime tk, BlockingQueue<Post> queuePost, ReaderPost rdPost) {
+	public TraitementPost(BlockingQueue<Post> queuePost, ReaderPost rdPost) {
 		super();
-		this.tk = tk;
 		this.queuePost = queuePost;
 		this.rdPost = rdPost;
+		rdPost.readNextPost();
 	}
 
-	public void traitement(){
+	public void traitement() {
 		Post pst = rdPost.getCurrentPost();
-		
+		while (pst.getUser_id() != -1) {
+			try {
+				queuePost.put(pst);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			pst = rdPost.readNextPost();
+		}
+
 		try {
 			queuePost.put(pst);
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		pst = rdPost.readNextPost();
+
+		System.out.println("ReaderPost => END");
 	}
 
 	@Override
@@ -36,13 +43,4 @@ public class TraitementPost implements Runnable{
 		traitement();
 	}
 
-	public DateTime getTk() {
-		return tk;
-	}
-
-	public void setTk(DateTime tk) {
-		this.tk = tk;
-	}
-	
 }
-
