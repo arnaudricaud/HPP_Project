@@ -1,12 +1,9 @@
 package HPP_PROJECT;
 
-import java.io.FileWriter;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashSet;
-import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;
 
 import org.joda.time.DateTime;
@@ -19,16 +16,20 @@ public class TraitementScore implements Runnable {
 	ArrayList<Post> displayedPosts = new ArrayList<Post>();
 	BlockingQueue<Post> queuePost;
 	BlockingQueue<Comment> queueComment;
+	BlockingQueue<Top3> queueTop3;
+	Top3 top3Post;
+	Post timePost = new Post(DateTime.now(), -1, -1, "");
 	Post currentPost;
 	Comment currentComment;
 
-	BlockingQueue<Post> queueTop3 = new ArrayBlockingQueue<Post>(1000);
 	DateTime tk;
 	String str_tk = "";
 
-	public TraitementScore(BlockingQueue<Post> queuePost, BlockingQueue<Comment> queueComment) {
+	public TraitementScore(BlockingQueue<Post> queuePost, BlockingQueue<Comment> queueComment,
+			BlockingQueue<Top3> queueTop3) {
 		this.queuePost = queuePost;
 		this.queueComment = queueComment;
+		this.queueTop3 = queueTop3;
 	}
 
 	@Override
@@ -51,17 +52,17 @@ public class TraitementScore implements Runnable {
 		nextTick(currentPost, currentComment);
 		while (tk != null) {
 			// RECUPERATION DES POSTS CORRESPONDANTS AU TIC
-			while (tk == currentPost.getTs()) {
+			while (tk.equals(currentPost.getTs())) {
 				tabPost.add(currentPost);
 				try {
 					currentPost = queuePost.take();
 				} catch (InterruptedException e) {
 					e.printStackTrace();
 				}
-				
+
 			}
 			// RECUPERATION DES COMMENTS CORRESPONDANTS AU TIC
-			while (tk == currentComment.getTs()) {
+			while (tk.equals(currentComment.getTs())) {
 				tabComment.add(currentComment);
 				try {
 					currentComment = queueComment.take();
@@ -77,12 +78,42 @@ public class TraitementScore implements Runnable {
 
 			calculScore(tk);
 			suppression();
-			System.out.println(tk);
-            if(!checkDisplayedPosts(displayedPosts)){
-            	writeTop3();
-            }
+			sortPost();
+			
+			// INIT TABLEAU TOP 3
+			if (!checkDisplayedPosts(displayedPosts)) {
+				// Changement du tableau displayPost
+				displayedPosts = new ArrayList<Post>();
+				int j = 0;
+				for (int i = 0; i < tabPost.size() && i < 3; i++) {
+					displayedPosts.add(new Post(tabPost.get(i)));
+					j++;
+				}
+				for (int i = j; i < 3; i++) {
+					displayedPosts.add(new Post(null, -1, -1, "NOPOST"));
+				}
+				
+				try {
+					
+					queueTop3.put(new Top3(displayedPosts.get(0), displayedPosts.get(1), displayedPosts.get(2), str_tk));
+				
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
 			nextTick(currentPost, currentComment);
 		}
+		
+		// POISON PILL
+		
+		try {
+			queueTop3.put(new Top3(displayedPosts.get(0), displayedPosts.get(1), displayedPosts.get(2), "POISONPILL"));
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 	}
 
 	public void nextTick(Post p, Comment c) {
@@ -159,34 +190,6 @@ public class TraitementScore implements Runnable {
 		}
 	}
 
-	public void writeTop3() {
-		sortPost();
-		displayedPosts = new ArrayList<Post>();
-		try {
-			FileWriter writer = new FileWriter("export/historique.txt", true);
-			writer.write(str_tk + ",");
-			for (int i = 0; i < 2; i++) {
-				if (i < tabPost.size()) {
-					displayedPosts.add(tabPost.get(i));
-					writer.write(tabPost.get(i).getPost_id() + "," + tabPost.get(i).getUser() + ","
-							+ tabPost.get(i).getScoreTotal() + "," + tabPost.get(i).getNbCommentateur() + ",");
-				} else {
-					writer.write("-,-,-,-,");
-				}
-			}
-			if (tabPost.size() >= 3) {
-				displayedPosts.add(tabPost.get(2));
-				writer.write(tabPost.get(2).getPost_id() + "," + tabPost.get(2).getUser() + ","
-						+ tabPost.get(2).getScoreTotal() + "," + tabPost.get(2).getNbCommentateur() + "\r\n");
-			} else {
-				writer.write("-,-,-,-\r\n");
-			}
-			writer.close();
-		} catch (IOException e) {
-			// do something
-		}
-	}
-
 	public void suppression() {
 		for (int i = 0; i < tabPost.size(); i++) {
 			if (tabPost.get(i).getScoreTotal() == 0) {
@@ -245,15 +248,13 @@ public class TraitementScore implements Runnable {
 		boolean samePosts = true;
 		int index = 0;
 
-		if (displayedPosts.size() < tabPost.size() && tabPost.size() < 4) {
-			for (int nbRajout = 0; nbRajout < tabPost.size() - displayedPosts.size(); ++nbRajout) {
-				displayedPosts.add(null);
-			}
-		}
-
 		sortPost();
 		while (index < tabPost.size() && index < 3) {
-			samePosts = samePosts && tabPost.get(index).equals(displayedPosts.get(index));
+			if (displayedPosts.size() > index){
+				samePosts = samePosts && (tabPost.get(index).getPost_id() == displayedPosts.get(index).getPost_id());
+			} else {
+				samePosts = false;
+			}
 			++index;
 		}
 

@@ -10,7 +10,7 @@ import org.joda.time.DateTime;
 public class Main {
 	static BlockingQueue<Post> queuePost = new ArrayBlockingQueue<Post>(1000);
 	static BlockingQueue<Comment> queueComment = new ArrayBlockingQueue<Comment>(1000);
-	// static BlockingQueue<Post> queueTop3 = new
+	static BlockingQueue<Top3> queueTop3 = new ArrayBlockingQueue<Top3>(1000);
 	// ArrayBlockingQueue<Post>(1000);
 
 	static ArrayList<Post> tabPost = new ArrayList<Post>();
@@ -19,23 +19,7 @@ public class Main {
 
 	public static void main(String[] args) {
 		Main main = new Main();
-		main.traitementTotal("ressources/data/test/Q1Case2/posts.dat", "ressources/data/test/Q1Case2/comments.dat");
-	}
-
-	public ArrayList<Post> getTabPost() {
-		return tabPost;
-	}
-
-	public void setTabPost(ArrayList<Post> tabPost) {
-		Main.tabPost = tabPost;
-	}
-
-	public ArrayList<Comment> getTabComment() {
-		return tabComment;
-	}
-
-	public void setTabComment(ArrayList<Comment> tabComment) {
-		Main.tabComment = tabComment;
+		main.traitementTotal("ressources/data/posts.dat", "ressources/data/comments.dat");
 	}
 
 	public void traitementTotal(String postFile, String commentFile) {
@@ -55,16 +39,23 @@ public class Main {
 		Thread thread2 = new Thread(tc);
 		thread2.setName("CommentReader");
 		thread2.start();
+		
+		// Thread Writer
+		TraitementWriter tw = new TraitementWriter(queueTop3);
+		Thread thread4 = new Thread(tw);
+		thread4.setName("PostWriter");
+		thread4.start();
 
 		System.out.println("START");
 
 		// Thread Caclul
-		TraitementScore ts = new TraitementScore(queuePost, queueComment);
+		TraitementScore ts = new TraitementScore(queuePost, queueComment, queueTop3);
 		Thread thread3 = new Thread(ts);
 		thread3.setName("Score Calculator");
 		thread3.start();
-		
+
 		try {
+			thread4.join();
 			thread3.join();
 			thread2.join();
 			thread.join();
@@ -72,7 +63,7 @@ public class Main {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+
 	}
 
 	public static void clearHistoriqueFile() {
@@ -85,4 +76,21 @@ public class Main {
 		}
 
 	}
+
+	public ArrayList<Post> getTabPost() {
+		return tabPost;
+	}
+
+	public void setTabPost(ArrayList<Post> tabPost) {
+		Main.tabPost = tabPost;
+	}
+
+	public ArrayList<Comment> getTabComment() {
+		return tabComment;
+	}
+
+	public void setTabComment(ArrayList<Comment> tabComment) {
+		Main.tabComment = tabComment;
+	}
+
 }

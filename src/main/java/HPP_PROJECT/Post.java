@@ -133,6 +133,18 @@ public class Post {
 
     }
 
+	public Post(Post post) {
+	    DateTime ts = post.getTs();
+	    str_ts = post.getStr_ts();
+	    post_id = post.getPost_id();
+	    user_id = post.getUser_id();
+	    user = post.getUser();
+	    scorePost = post.getScorePost();
+	    scoreTotal = post.getScoreTotal();
+	    age = post.getAge();
+	    nbCommentateur = post.getNbCommentateur(); 
+	}
+
     /**
      * TODO Définir les methodes pour la classe post
      **/
