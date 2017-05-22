@@ -19,7 +19,7 @@ public class Main {
 
 	public static void main(String[] args) {
 		Main main = new Main();
-		main.traitementTotal("ressources/data/posts.dat", "ressources/data/comments.dat");
+		main.traitementTotal("ressources/test/Q1Basic2/Posts.dat", "ressources/test/Q1Basic2/comments.dat");
 	}
 
 	public void traitementTotal(String postFile, String commentFile) {
@@ -45,8 +45,6 @@ public class Main {
 		Thread thread4 = new Thread(tw);
 		thread4.setName("PostWriter");
 		thread4.start();
-
-		System.out.println("START");
 
 		// Thread Caclul
 		TraitementScore ts = new TraitementScore(queuePost, queueComment, queueTop3);

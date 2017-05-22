@@ -106,7 +106,14 @@ public class TraitementScore implements Runnable {
 		}
 		
 		// POISON PILL
-		
+		int j = 0;
+		for (int i = 0; i < tabPost.size() && i < 3; i++) {
+			displayedPosts.add(new Post(tabPost.get(i)));
+			j++;
+		}
+		for (int i = j; i < 3; i++) {
+			displayedPosts.add(new Post(null, -1, -1, "NOPOST"));
+		}
 		try {
 			queueTop3.put(new Top3(displayedPosts.get(0), displayedPosts.get(1), displayedPosts.get(2), "POISONPILL"));
 		} catch (InterruptedException e) {

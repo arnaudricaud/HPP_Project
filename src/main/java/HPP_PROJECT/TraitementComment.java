@@ -35,7 +35,6 @@ public class TraitementComment implements Runnable {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		System.out.println("ReaderComment => END");
 	}
 	
 	@Override
